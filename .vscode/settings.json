@@ -1,5 +1,9 @@
 {
-	"files.associations": {
-		"*.css": "tailwindcss"
-	}
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"workbench.colorTheme": "Default Dark Modern",
+	"workbench.preferredDarkColorTheme": "Visual Studio Dark",
+	"workbench.preferredHighContrastColorTheme": "Visual Studio Dark",
+	"window.autoDetectColorScheme": false,
+	"prettier.prettierPath": "./node_modules/prettier"
 }
