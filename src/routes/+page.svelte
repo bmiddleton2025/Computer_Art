@@ -1,10 +1,5 @@
 <script>
 	import Icon from '@iconify/svelte';
-
-	$effect(() => {
-		console.log(textOutput);
-	});
-
 	const morseCodeValues = $state({
 		A: '.-',
 		B: '-...',
@@ -44,20 +39,32 @@
 		0: '-----',
 		' ': ''
 	});
+	const options = $state(['Text', 'Morse']);
 	let textInput = $state('');
 	let textOutput = $state('');
 	let inputOption = $state('Text');
 	let outputOption = $state('Morse');
-	const options = $state(['Text', 'Morse']);
+	let numBoxesPerRow = $state(20);
 
 	function convertInput() {
-		textInput = textInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
-		if (inputOption == 'Text') {
+		if (inputOption == 'Text' && outputOption == 'Morse') {
+			textInput = textInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
 			textOutput = textInput
 				.toUpperCase()
 				.split('')
 				.map((letter) => morseCodeValues[letter] || '')
 				.join(' ');
+		} else if (inputOption == 'Morse' && outputOption == 'Text') {
+			textInput = textInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
+			textOutput = textInput
+				.split(' ')
+				.map(
+					(letter) =>
+						Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || ''
+				)
+				.join('');
+		} else if (inputOption == outputOption) {
+			textOutput = textInput;
 		}
 	}
 </script>
@@ -77,6 +84,7 @@
 						bind:value={inputOption}
 						class="w-1/2 rounded-3xl border-2 border-black bg-gray-300 shadow-lg"
 						aria-label="Input type"
+						onchange={convertInput}
 					>
 						{#each options as option (option)}
 							<option value={option}>{option}</option>
@@ -105,6 +113,7 @@
 						bind:value={outputOption}
 						class="w-1/2 rounded-3xl border-2 border-black bg-gray-300 shadow-lg"
 						aria-label="Input type"
+						onchange={convertInput}
 					>
 						{#each options as option (option)}
 							<option value={option}>{option}</option>
@@ -113,11 +122,28 @@
 				</div>
 				<textarea
 					disabled
-					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black shadow-lg"
+					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
 					bind:value={textOutput}
 					aria-label="Output text"
 				></textarea>
 			</div>
+		</div>
+	</div>
+	<div class="flex">
+		<div class="flex grid w-3/4 grid-cols-{numBoxesPerRow} flex-wrap rounded-lg bg-black">
+			<!-- Pixel Area -->
+			{#each textOutput as symbol}
+				{#if symbol == '.'}
+					<Icon icon="material-symbols:square-outline-rounded" class="text-red-500" width="fit" />
+				{:else if symbol == '-'}
+					<Icon icon="material-symbols:square-outline-rounded" class="text-blue-500" width="fit" />
+				{:else if symbol == ' '}
+					<Icon icon="material-symbols:square-outline-rounded" class="text-black" width="fit" />
+				{/if}
+			{/each}
+		</div>
+		<div>
+			<!-- Buttons -->
 		</div>
 	</div>
 </div>
