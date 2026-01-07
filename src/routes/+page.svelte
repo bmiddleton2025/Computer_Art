@@ -1,5 +1,8 @@
 <script>
+	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
+	import * as Tone from 'tone';
+
 	const morseCodeValues = $state({
 		A: '.-',
 		B: '-...',
@@ -40,31 +43,55 @@
 		' ': ''
 	});
 	const options = $state(['Text', 'Morse']);
-	let textInput = $state('');
-	let textOutput = $state('');
+
+	let userInput = $state('');
+	let userOutput = $state('');
 	let inputOption = $state('Text');
 	let outputOption = $state('Morse');
 	let numBoxesPerRow = $state(20);
+	let textString = $state('');
+	let morseString = $state('');
 
 	function convertInput() {
-		if (inputOption == 'Text' && outputOption == 'Morse') {
-			textInput = textInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
-			textOutput = textInput
+		if (inputOption == 'Text') {
+			userInput = userInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
+			textString = userInput;
+			morseString = userInput
 				.toUpperCase()
 				.split('')
 				.map((letter) => morseCodeValues[letter] || '')
 				.join(' ');
-		} else if (inputOption == 'Morse' && outputOption == 'Text') {
-			textInput = textInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
-			textOutput = textInput
+		} else if (inputOption == 'Morse') {
+			userInput = userInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
+			morseString = userInput;
+			textString = userInput
 				.split(' ')
 				.map(
 					(letter) =>
 						Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || ''
 				)
 				.join('');
-		} else if (inputOption == outputOption) {
-			textOutput = textInput;
+		}
+
+		if (outputOption == 'Text') {
+			userOutput = textString;
+		} else if (outputOption == 'Morse') {
+			userOutput = morseString;
+		}
+	}
+
+	async function playMorseCode() {
+		await Tone.start();
+		let synth = new Tone.Synth().toDestination();
+		let timing = 0;
+		for (let letter of morseString) {
+			const now = Tone.now();
+			if (letter == '.') {
+				await synth?.triggerAttackRelease('C4', '8n', now + timing);
+			} else if (letter == '-') {
+				await synth?.triggerAttackRelease('G4', '8n', now + timing);
+			}
+			timing += 0.25;
 		}
 	}
 </script>
@@ -93,7 +120,7 @@
 				</div>
 				<textarea
 					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg"
-					bind:value={textInput}
+					bind:value={userInput}
 					oninput={convertInput}
 					aria-label="Input text"
 				></textarea>
@@ -123,7 +150,7 @@
 				<textarea
 					disabled
 					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
-					bind:value={textOutput}
+					bind:value={userOutput}
 					aria-label="Output text"
 				></textarea>
 			</div>
@@ -135,7 +162,7 @@
 			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr);"
 		>
 			<!-- Pixel Area -->
-			{#each textOutput as symbol}
+			{#each morseString as symbol}
 				{#if symbol == '.'}
 					<Icon icon="material-symbols:square-rounded" class="text-red-500" width="fit" />
 				{:else if symbol == '-'}
@@ -147,6 +174,7 @@
 		</div>
 		<div>
 			<!-- Buttons -->
+			<button onclick={playMorseCode}>Play</button>
 		</div>
 	</div>
 </div>
