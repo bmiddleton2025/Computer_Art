@@ -130,15 +130,18 @@
 		</div>
 	</div>
 	<div class="flex">
-		<div class="flex grid w-3/4 grid-cols-{numBoxesPerRow} flex-wrap rounded-lg bg-black">
+		<div
+			class="w-3/4 rounded-lg bg-black"
+			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr);"
+		>
 			<!-- Pixel Area -->
 			{#each textOutput as symbol}
 				{#if symbol == '.'}
-					<Icon icon="material-symbols:square-outline-rounded" class="text-red-500" width="fit" />
+					<Icon icon="material-symbols:square-rounded" class="text-red-500" width="fit" />
 				{:else if symbol == '-'}
-					<Icon icon="material-symbols:square-outline-rounded" class="text-blue-500" width="fit" />
+					<Icon icon="material-symbols:square-rounded" class="text-blue-500" width="fit" />
 				{:else if symbol == ' '}
-					<Icon icon="material-symbols:square-outline-rounded" class="text-black" width="fit" />
+					<Icon icon="material-symbols:square-rounded" class="text-black" width="fit" />
 				{/if}
 			{/each}
 		</div>

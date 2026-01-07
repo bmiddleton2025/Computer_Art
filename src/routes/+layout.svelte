@@ -6,6 +6,6 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<div class="bg-linear-to-t from-black to-blue-900 px-20 py-10 text-white">
+<div class="min-h-screen bg-linear-to-t from-black to-blue-900 px-20 py-10 text-white">
 	{@render children()}
 </div>
