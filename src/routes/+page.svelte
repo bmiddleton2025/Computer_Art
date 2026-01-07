@@ -87,9 +87,11 @@
 		for (let letter of morseString) {
 			const now = Tone.now();
 			if (letter == '.') {
-				await synth?.triggerAttackRelease('C4', '8n', now + timing);
+				await synth?.triggerAttackRelease('C4', '12n', now + timing);
 			} else if (letter == '-') {
-				await synth?.triggerAttackRelease('G4', '8n', now + timing);
+				await synth?.triggerAttackRelease('G4', '4n', now + timing);
+			} else if (letter == ' ') {
+				timing += 0.25;
 			}
 			timing += 0.25;
 		}
