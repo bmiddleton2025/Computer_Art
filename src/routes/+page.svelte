@@ -76,9 +76,9 @@
 		}
 
 		if (outputOption == 'Text') {
-			userOutput = textString;
+			userOutput = textString.trimEnd().trimStart();
 		} else if (outputOption == 'Morse') {
-			userOutput = morseString;
+			userOutput = morseString.trimEnd().trimStart();
 		}
 	}
 
