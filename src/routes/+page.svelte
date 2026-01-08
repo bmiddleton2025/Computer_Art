@@ -1,7 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import * as Tone from 'tone';
+
+	let playingIndex = $state(-1);
 
 	const morseCodeValues = $state({
 		A: '.-',
@@ -51,6 +52,7 @@
 	let numBoxesPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
+	let speed = $state(0.2);
 
 	function convertInput() {
 		if (inputOption == 'Text') {
@@ -80,20 +82,39 @@
 		}
 	}
 
+	function waitTime(seconds) {
+		return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+	}
+
 	async function playMorseCode() {
 		await Tone.start();
 		let synth = new Tone.Synth().toDestination();
 		let timing = 0;
-		for (let letter of morseString) {
+		for (let [index, value] of morseString.split('').entries()) {
 			const now = Tone.now();
-			if (letter == '.') {
-				await synth?.triggerAttackRelease('C4', '12n', now + timing);
-			} else if (letter == '-') {
-				await synth?.triggerAttackRelease('G4', '4n', now + timing);
-			} else if (letter == ' ') {
-				timing += 0.25;
+			let duration = speed;
+			if (value == '.') {
+				duration = duration / 3;
+				synth?.triggerAttackRelease('C4', duration, now + timing);
+			} else if (value == '-') {
+				synth?.triggerAttackRelease('C4', duration, now + timing);
 			}
-			timing += 0.25;
+
+			// Schedule icon to scale at the same time as the sound
+			setTimeout(() => {
+				playingIndex = index;
+			}, timing * 1000);
+
+			// Schedule icon to stop scaling when sound ends
+			setTimeout(
+				() => {
+					playingIndex = -1;
+				},
+				(timing + duration) * 1000
+			);
+
+			timing += duration;
+			await waitTime(duration);
 		}
 	}
 </script>
@@ -158,25 +179,44 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex">
+	<div class="flex space-x-2">
 		<div
-			class="w-3/4 rounded-lg bg-black"
+			class=" w-3/4 rounded-lg bg-black"
 			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr);"
 		>
 			<!-- Pixel Area -->
-			{#each morseString as symbol}
+			{#each morseString as symbol, index}
 				{#if symbol == '.'}
-					<Icon icon="material-symbols:square-rounded" class="text-red-500" width="fit" />
+					<Icon
+						icon="material-symbols:square-rounded"
+						class={index == playingIndex ? 'text-red-300' : 'text-red-500'}
+						width="fit"
+					/>
 				{:else if symbol == '-'}
-					<Icon icon="material-symbols:square-rounded" class="text-blue-500" width="fit" />
+					<Icon
+						icon="material-symbols:square-rounded"
+						class={index == playingIndex ? 'text-blue-300' : 'text-blue-500'}
+						width="fit"
+					/>
 				{:else if symbol == ' '}
-					<Icon icon="material-symbols:square-rounded" class="text-black" width="fit" />
+					<Icon
+						icon="material-symbols:square-rounded"
+						class="text-black {index == playingIndex ? 'scale-125' : ''}"
+						width="fit"
+					/>
 				{/if}
 			{/each}
 		</div>
-		<div>
+		<div class="w-1/4">
 			<!-- Buttons -->
-			<button onclick={playMorseCode}>Play</button>
+			<div class="flex items-center justify-center space-x-10">
+				<button onclick={playMorseCode} class="w-1/8 cursor-pointer"
+					><Icon icon="gridicons:play" width="fit" /></button
+				>
+				<button onclick={() => (playingIndex = -1)} class="w-1/8 cursor-pointer"
+					><Icon icon="carbon:stop-filled" width="fit" /></button
+				>
+			</div>
 		</div>
 	</div>
 </div>
