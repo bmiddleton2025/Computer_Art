@@ -144,12 +144,27 @@
 				></textarea>
 			</div>
 
-			<Icon
-				icon="pajamas:arrow-up"
-				width="100"
-				class="mt-10 rotate-90 text-gray-400"
-				aria-hidden="true"
-			/>
+			<div class="mt-10 flex w-fit flex-col items-center">
+				<Icon
+					icon="pajamas:arrow-up"
+					width="150"
+					class="rotate-90 text-gray-400"
+					aria-hidden="true"
+				/>
+				<!-- Buttons -->
+				<div class="flex items-center justify-center space-x-10">
+					<button
+						onclick={playMorseCode}
+						class={isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}
+						disabled={isPlaying}><Icon icon="gridicons:play" width="50" /></button
+					>
+					<button
+						onclick={() => (isPlaying = false)}
+						class={!isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}
+						disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+					>
+				</div>
+			</div>
 
 			<!-- Output Section -->
 			<div class="flex w-1/3 flex-col space-y-2 text-black">
@@ -174,9 +189,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex space-x-2">
+	<div class="flex justify-center">
 		<div
-			class=" w-3/4 rounded-lg bg-black"
+			class="rounded-lg bg-black"
 			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr);"
 		>
 			<!-- Pixel Area -->
@@ -201,21 +216,6 @@
 					/>
 				{/if}
 			{/each}
-		</div>
-		<div class="w-1/5">
-			<!-- Buttons -->
-			<div class="flex items-center justify-center space-x-10">
-				<button
-					onclick={playMorseCode}
-					class="w-1/8 {isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}"
-					disabled={isPlaying}><Icon icon="gridicons:play" width="fit" /></button
-				>
-				<button
-					onclick={() => (isPlaying = false)}
-					class="w-1/8 {!isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}"
-					><Icon icon="carbon:stop-filled" width="fit" /></button
-				>
-			</div>
 		</div>
 	</div>
 </div>
