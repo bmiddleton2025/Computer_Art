@@ -2,8 +2,6 @@
 	import Icon from '@iconify/svelte';
 	import * as Tone from 'tone';
 
-	let playingIndex = $state(-1);
-
 	const morseCodeValues = $state({
 		A: '.-',
 		B: '-...',
@@ -15,7 +13,7 @@
 		H: '....',
 		I: '..',
 		J: '.---',
-		K: '.-..',
+		K: '-.-',
 		L: '.-..',
 		M: '--',
 		N: '-.',
@@ -52,7 +50,9 @@
 	let numBoxesPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
-	let speed = $state(0.2);
+	let speed = $state(0.4);
+	let isPlaying = $state(false);
+	let playingIndex = $state(-1);
 
 	function convertInput() {
 		if (inputOption == 'Text') {
@@ -87,34 +87,29 @@
 	}
 
 	async function playMorseCode() {
-		await Tone.start();
-		let synth = new Tone.Synth().toDestination();
-		let timing = 0;
-		for (let [index, value] of morseString.split('').entries()) {
-			const now = Tone.now();
-			let duration = speed;
-			if (value == '.') {
-				duration = duration / 3;
-				synth?.triggerAttackRelease('C4', duration, now + timing);
-			} else if (value == '-') {
-				synth?.triggerAttackRelease('C4', duration, now + timing);
-			}
-
-			// Schedule icon to scale at the same time as the sound
-			setTimeout(() => {
+		if (!isPlaying) {
+			await Tone.start();
+			let synth = new Tone.Synth().toDestination();
+			isPlaying = true;
+			for (let [index, value] of morseString.split('').entries()) {
+				const now = Tone.now();
 				playingIndex = index;
-			}, timing * 1000);
-
-			// Schedule icon to stop scaling when sound ends
-			setTimeout(
-				() => {
-					playingIndex = -1;
-				},
-				(timing + duration) * 1000
-			);
-
-			timing += duration;
-			await waitTime(duration);
+				if (value == '.') {
+					synth?.triggerAttack('C4');
+					synth.triggerRelease(now + speed / 3);
+					await waitTime(speed / 3);
+				} else if (value == '-') {
+					synth?.triggerAttack('C4');
+					synth.triggerRelease(now + speed);
+					await waitTime(speed);
+				} else if (value == ' ') {
+					await waitTime(speed);
+				}
+				await waitTime(0.01);
+				playingIndex = -1;
+				if (!isPlaying) break;
+			}
+			isPlaying = false;
 		}
 	}
 </script>
@@ -207,13 +202,17 @@
 				{/if}
 			{/each}
 		</div>
-		<div class="w-1/4">
+		<div class="w-1/5">
 			<!-- Buttons -->
 			<div class="flex items-center justify-center space-x-10">
-				<button onclick={playMorseCode} class="w-1/8 cursor-pointer"
-					><Icon icon="gridicons:play" width="fit" /></button
+				<button
+					onclick={playMorseCode}
+					class="w-1/8 {isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}"
+					disabled={isPlaying}><Icon icon="gridicons:play" width="fit" /></button
 				>
-				<button onclick={() => (playingIndex = -1)} class="w-1/8 cursor-pointer"
+				<button
+					onclick={() => (isPlaying = false)}
+					class="w-1/8 {!isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}"
 					><Icon icon="carbon:stop-filled" width="fit" /></button
 				>
 			</div>
