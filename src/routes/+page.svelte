@@ -51,7 +51,7 @@
 	let numBoxesPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
-	let speed = $state(0.4);
+	let speed = $state(0.25);
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
 	let openModal = $state(false);
@@ -112,17 +112,17 @@
 				const now = Tone.now();
 				playingIndex = index;
 				if (value == '.') {
-					synth?.triggerAttack(dotOptions.tune);
+					synth.triggerAttack(dotOptions.tune);
 					synth.triggerRelease(now + speed / 3);
 					await waitTime(speed / 3);
 				} else if (value == '-') {
-					synth?.triggerAttack(dashOptions.tune);
+					synth.triggerAttack(dashOptions.tune);
 					synth.triggerRelease(now + speed);
 					await waitTime(speed);
 				} else if (value == ' ') {
 					await waitTime(speed);
 				}
-				await waitTime(0.01);
+				await waitTime(speed / 4); //break between tones
 				playingIndex = -1;
 				if (!isPlaying) break;
 			}
@@ -144,7 +144,7 @@
 <div class="space-y-5">
 	<div class="flex text-gray-400">
 		<button class="ml-auto cursor-pointer" aria-label="Settings" onclick={() => (openModal = true)}>
-			<Icon icon="mdi:gear" width="30" height="30" />
+			<Icon icon="mdi:gear" width="40" />
 		</button>
 	</div>
 	<div>
