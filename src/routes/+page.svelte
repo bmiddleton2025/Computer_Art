@@ -238,12 +238,7 @@
 						style="color: #{dashOptions.color}"
 					/>
 				{:else if symbol == ' '}
-					<Icon
-						icon={spaceOptions.icon}
-						class={index == playingIndex ? 'brightness-125' : ''}
-						width="fit"
-						style="color: #{spaceOptions.color}"
-					/>
+					<Icon icon={spaceOptions.icon} width="fit" style="color: #{spaceOptions.color}" />
 				{/if}
 			{/each}
 		</div>
