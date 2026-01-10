@@ -1,4 +1,5 @@
 <script>
+	import SettingsModal from '$lib/components/SettingsModal.svelte';
 	import Icon from '@iconify/svelte';
 	import * as Tone from 'tone';
 
@@ -53,6 +54,22 @@
 	let speed = $state(0.4);
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
+	let openModal = $state(false);
+	let dotOptions = $state({
+		color: 'ff0000',
+		icon: 'material-symbols:square-rounded',
+		tune: 'C4'
+	});
+	let dashOptions = $state({
+		color: '0000ff',
+		icon: 'material-symbols:square-rounded',
+		tune: 'C4'
+	});
+	let spaceOptions = $state({
+		color: '000000',
+		icon: 'material-symbols:square-rounded'
+	});
+	let backgroundColor = $state('000000');
 
 	function convertInput() {
 		if (inputOption == 'Text') {
@@ -95,11 +112,11 @@
 				const now = Tone.now();
 				playingIndex = index;
 				if (value == '.') {
-					synth?.triggerAttack('C4');
+					synth?.triggerAttack(dotOptions.tune);
 					synth.triggerRelease(now + speed / 3);
 					await waitTime(speed / 3);
 				} else if (value == '-') {
-					synth?.triggerAttack('C4');
+					synth?.triggerAttack(dashOptions.tune);
 					synth.triggerRelease(now + speed);
 					await waitTime(speed);
 				} else if (value == ' ') {
@@ -114,9 +131,19 @@
 	}
 </script>
 
+<SettingsModal
+	bind:openModal
+	bind:dotOptions
+	bind:dashOptions
+	bind:spaceOptions
+	bind:speed
+	bind:numBoxesPerRow
+	bind:backgroundColor
+/>
+
 <div class="space-y-5">
 	<div class="flex text-gray-400">
-		<button class="ml-auto" aria-label="Settings">
+		<button class="ml-auto cursor-pointer" aria-label="Settings" onclick={() => (openModal = true)}>
 			<Icon icon="mdi:gear" width="30" height="30" />
 		</button>
 	</div>
@@ -191,28 +218,31 @@
 	</div>
 	<div class="flex justify-center">
 		<div
-			class="rounded-lg bg-black"
-			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr);"
+			class="rounded-lg"
+			style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr); background-color: #{backgroundColor};"
 		>
 			<!-- Pixel Area -->
 			{#each morseString as symbol, index}
 				{#if symbol == '.'}
 					<Icon
-						icon="material-symbols:square-rounded"
-						class={index == playingIndex ? 'text-red-300' : 'text-red-500'}
+						icon={dotOptions.icon}
+						class={index == playingIndex ? 'brightness-125' : ''}
 						width="fit"
+						style="color: #{dotOptions.color}"
 					/>
 				{:else if symbol == '-'}
 					<Icon
-						icon="material-symbols:square-rounded"
-						class={index == playingIndex ? 'text-blue-300' : 'text-blue-500'}
+						icon={dashOptions.icon}
+						class={index == playingIndex ? 'brightness-125' : ''}
 						width="fit"
+						style="color: #{dashOptions.color}"
 					/>
 				{:else if symbol == ' '}
 					<Icon
-						icon="material-symbols:square-rounded"
-						class="text-black {index == playingIndex ? 'scale-125' : ''}"
+						icon={spaceOptions.icon}
+						class={index == playingIndex ? 'brightness-125' : ''}
 						width="fit"
+						style="color: #{spaceOptions.color}"
 					/>
 				{/if}
 			{/each}
