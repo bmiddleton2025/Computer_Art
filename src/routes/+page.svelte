@@ -182,8 +182,11 @@
 				<div class="flex items-center justify-center space-x-10">
 					<button
 						onclick={playMorseCode}
-						class={isPlaying ? 'text-gray-400' : 'cursor-pointer hover:text-gray-300'}
-						disabled={isPlaying}><Icon icon="gridicons:play" width="50" /></button
+						class={isPlaying || userOutput.length == 0
+							? 'text-gray-400'
+							: 'cursor-pointer hover:text-gray-300'}
+						disabled={isPlaying || userOutput.length == 0}
+						><Icon icon="gridicons:play" width="50" /></button
 					>
 					<button
 						onclick={() => (isPlaying = false)}
@@ -226,14 +229,14 @@
 				{#if symbol == '.'}
 					<Icon
 						icon={dotOptions.icon}
-						class={index == playingIndex ? 'brightness-125' : ''}
+						class={index == playingIndex ? 'opacity-100' : 'opacity-50'}
 						width="fit"
 						style="color: #{dotOptions.color}"
 					/>
 				{:else if symbol == '-'}
 					<Icon
 						icon={dashOptions.icon}
-						class={index == playingIndex ? 'brightness-125' : ''}
+						class={index == playingIndex ? 'opacity-100' : 'opacity-50'}
 						width="fit"
 						style="color: #{dashOptions.color}"
 					/>
