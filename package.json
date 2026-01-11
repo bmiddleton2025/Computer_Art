@@ -36,6 +36,7 @@
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"flowbite": "^4.0.1",
 		"flowbite-svelte": "^1.31.0",
+		"html2canvas": "^1.4.1",
 		"tone": "^15.1.22"
 	}
 }
