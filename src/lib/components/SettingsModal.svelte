@@ -45,7 +45,7 @@
 	bind:this={dialog}
 	onclose={() => (openModal = false)}
 	onclick={handleBackdropClick}
-	class="mx-auto my-auto w-1/2 rounded-lg border-2 border-black bg-gray-400 p-2"
+	class="mx-auto my-auto w-2/3 rounded-lg border-2 border-black bg-gray-400 p-2"
 >
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
@@ -55,11 +55,11 @@
 			</button>
 		</div>
 		<hr />
-		<div class="flex justify-evenly gap-4">
+		<div class="justify-evenly lg:flex">
 			{#each [{ title: 'Dot', options: dotOptions, hasTune: true }, { title: 'Dash', options: dashOptions, hasTune: true }, { title: 'Space', options: spaceOptions, hasTune: false }] as section (section.title)}
 				<div>
 					<h2 class="text-xl font-semibold">{section.title}</h2>
-					<div class="flex items-center gap-4">
+					<div class="flex items-center justify-around">
 						<div class="space-y-2">
 							<div class="flex justify-between">
 								<h3>Select Icon:</h3>
@@ -96,7 +96,7 @@
 								icon={section.options.icon}
 								style="color: #{section.options.color}"
 								width="fit"
-								class="mx-auto hidden lg:block"
+								class="mx-auto"
 							/>
 						</div>
 					</div>
