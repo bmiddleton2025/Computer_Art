@@ -23,7 +23,7 @@
 			<PhoneNav />
 		{/if}
 	</div>
-	<div class="flex-1 overflow-auto px-20">
+	<div class="flex-1 overflow-auto px-20 pt-20">
 		{@render children()}
 	</div>
 </div>

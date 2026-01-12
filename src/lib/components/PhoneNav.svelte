@@ -16,48 +16,21 @@
 	<Dropdown simple {activeUrl} class="mx-auto w-full bg-zinc-800 dark:bg-zinc-800" bind:isOpen>
 		<DropdownItem
 			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'value-statement'
+			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {!activeUrl.includes(
+				'about'
 			)
 				? activeClass
 				: ''}"
-			href="{base}/#value-statement">Value Statement</DropdownItem
+			href={base}>Home</DropdownItem
 		>
 		<DropdownItem
 			onclick={() => (isOpen = false)}
 			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'projects'
+				'about'
 			)
 				? activeClass
 				: ''}"
-			href="{base}/#projects">Projects</DropdownItem
-		>
-		<DropdownItem
-			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'skills-and-tools'
-			)
-				? activeClass
-				: ''}"
-			href="{base}/#skills-and-tools">Skills and Tools</DropdownItem
-		>
-		<DropdownItem
-			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'education-and-achievements'
-			)
-				? activeClass
-				: ''}"
-			href="{base}/#education-and-achievements">Education and Achievements</DropdownItem
-		>
-		<DropdownItem
-			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'interests'
-			)
-				? activeClass
-				: ''}"
-			href="{base}/#interests">Interests</DropdownItem
+			href="{base}/about">Projects</DropdownItem
 		>
 	</Dropdown>
 	<DarkMode class="my-auto mr-0 ml-auto h-fit hover:bg-zinc-700 dark:hover:bg-zinc-700" />
