@@ -51,7 +51,6 @@
 				class="flex justify-center"
 				bind:index
 				onchange={(detail) => (image = detail)}
-				duration={5000}
 			>
 				<Controls />
 			</Carousel>
