@@ -4,9 +4,6 @@
 	let { data } = $props();
 	const images = $derived(data.images);
 
-	$effect(() => console.log(images));
-
-	let image = $state();
 	let index = $state(0);
 </script>
 
@@ -45,13 +42,7 @@
 	<div class="space-y-10">
 		<h1 class="text-6xl font-bold">Examples</h1>
 		<div class="mx-auto mb-10 items-center">
-			<Carousel
-				{images}
-				classes={{ slide: 'w-fit' }}
-				class="flex justify-center"
-				bind:index
-				onchange={(detail) => (image = detail)}
-			>
+			<Carousel {images} classes={{ slide: 'w-fit' }} class="flex justify-center" bind:index>
 				<Controls />
 			</Carousel>
 		</div>
