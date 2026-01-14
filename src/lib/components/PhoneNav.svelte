@@ -30,7 +30,7 @@
 			)
 				? activeClass
 				: ''}"
-			href="{base}/about">Projects</DropdownItem
+			href="{base}/about">About</DropdownItem
 		>
 	</Dropdown>
 	<DarkMode class="my-auto mr-0 ml-auto h-fit hover:bg-zinc-700 dark:hover:bg-zinc-700" />

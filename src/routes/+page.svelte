@@ -3,7 +3,6 @@
 	import Icon from '@iconify/svelte';
 	import html2canvas from 'html2canvas';
 	import * as Tone from 'tone';
-	import { onDestroy } from 'svelte';
 
 	const morseCodeValues = $state({
 		A: '.-',

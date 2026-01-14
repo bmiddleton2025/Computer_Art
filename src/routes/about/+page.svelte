@@ -1,11 +1,10 @@
 <script>
-	import { Carousel, Controls, Thumbnails } from 'flowbite-svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { Carousel, Controls } from 'flowbite-svelte';
 
-	const images = [
-		{ src: './images/MorseCodeImage.png', alt: '' },
-		{ src: './images/MorseCodeImage-1.png', alt: '' }
-	];
+	let { data } = $props();
+	const images = $derived(data.images);
+
+	$effect(() => console.log(images));
 
 	let image = $state();
 	let index = $state(0);
@@ -52,6 +51,7 @@
 				class="flex justify-center"
 				bind:index
 				onchange={(detail) => (image = detail)}
+				duration={5000}
 			>
 				<Controls />
 			</Carousel>
