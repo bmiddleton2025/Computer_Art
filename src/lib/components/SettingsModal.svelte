@@ -148,13 +148,16 @@
 		<div>
 			<h2 class="min-w-fit text-xl font-semibold">Resources:</h2>
 			<p>
-				For more <a href="https://icon-sets.iconify.design/" class="text-blue-800 underline"
-					>Icons</a
+				For more <a
+					href="https://icon-sets.iconify.design/"
+					class="text-blue-800 underline"
+					target="_blank">Icons</a
 				>
 			</p>
 			<p>
 				For more <a
 					href="https://github.com/Tonejs/Tone.js/blob/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/Tone/core/type/NoteUnits.ts#L29"
+					target="_blank"
 					class="text-blue-800 underline">Tones</a
 				>
 			</p>

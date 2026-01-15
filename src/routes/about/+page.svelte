@@ -14,11 +14,11 @@
 			<div class="text-center">
 				<img
 					alt="Bobbi Middleton"
-					src="dakota2025.jpg"
+					src="bobbi-middleton.jpg"
 					class="mx-auto w-1/4 rounded-full border-2 border-black object-contain"
 				/>
 				<div>
-					<h2 class="flex-none">Project Concept:</h2>
+					<h2 class="flex-none font-semibold">Project Concept:</h2>
 					<h2 class="flex-none">Bobbi Middleton</h2>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 					class="mx-auto w-1/4 rounded-full border-2 border-black object-contain"
 				/>
 				<div>
-					<h2 class="flex-none">Software Developer:</h2>
+					<h2 class="flex-none font-semibold">Software Developer:</h2>
 					<h2 class="flex-none">Dakota Gullicksen</h2>
 				</div>
 			</div>
@@ -42,7 +42,13 @@
 	<div class="space-y-10">
 		<h1 class="text-6xl font-bold">Examples</h1>
 		<div class="mx-auto mb-10 items-center">
-			<Carousel {images} classes={{ slide: 'w-fit' }} class="flex justify-center" bind:index>
+			<Carousel
+				{images}
+				classes={{ slide: 'w-fit' }}
+				class="flex justify-center"
+				bind:index
+				duration={10000}
+			>
 				<Controls />
 			</Carousel>
 		</div>
