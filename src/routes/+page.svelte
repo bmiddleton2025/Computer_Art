@@ -47,7 +47,7 @@
 
 	let captureTarget = $state(); // Use HTMLElement for type safety
 	let userInput = $state('');
-	let userOutput = $state('.-.-.-.-..-');
+	let userOutput = $state('');
 	let inputOption = $state('Text');
 	let outputOption = $state('Morse');
 	let numBoxesPerRow = $state(20);
