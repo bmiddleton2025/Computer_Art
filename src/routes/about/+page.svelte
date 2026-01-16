@@ -1,8 +1,20 @@
 <script>
 	import { Carousel, Controls } from 'flowbite-svelte';
 
-	let { data } = $props();
-	const images = $derived(data.images);
+	const images = $state([
+		{
+			src: '/images/MorseCodeImage.png',
+			alt: ''
+		},
+		{
+			src: '/images/MorseCodeImage-1.png',
+			alt: ''
+		},
+		{
+			src: '/images/MorseCodeImage-2.png',
+			alt: ''
+		}
+	]);
 
 	let index = $state(0);
 </script>
