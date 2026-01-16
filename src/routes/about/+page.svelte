@@ -51,7 +51,7 @@
 	<div class="space-y-10">
 		<h1 class="text-6xl font-bold text-shadow-lg">Examples</h1>
 		<div class="mx-auto mb-10 items-center">
-			<Carousel {images} classes={{ slide: 'w-fit' }} class="flex justify-center" bind:index duration={10000}>
+			<Carousel {images} classes={{ slide: 'w-fit h-4/5' }} class="flex justify-center" bind:index duration={10000}>
 				<Controls />
 			</Carousel>
 		</div>
