@@ -87,10 +87,7 @@
 			morseString = userInput;
 			textString = userInput
 				.split(' ')
-				.map(
-					(letter) =>
-						Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || ''
-				)
+				.map((letter) => Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || '')
 				.join('');
 		}
 
@@ -155,15 +152,7 @@
 	}
 </script>
 
-<SettingsModal
-	bind:openModal
-	bind:dotOptions
-	bind:dashOptions
-	bind:spaceOptions
-	bind:speed
-	bind:numBoxesPerRow
-	bind:backgroundColor
-/>
+<SettingsModal bind:openModal bind:dotOptions bind:dashOptions bind:spaceOptions bind:speed bind:numBoxesPerRow bind:backgroundColor />
 
 <div class="space-y-5">
 	<div class="flex text-gray-400">
@@ -195,12 +184,7 @@
 		</div>
 
 		<div class="mx-auto flex hidden flex-col items-center lg:mt-10 lg:block lg:w-fit">
-			<Icon
-				icon="pajamas:arrow-up"
-				width="150"
-				class="rotate-90 text-zinc-400"
-				aria-hidden="true"
-			/>
+			<Icon icon="pajamas:arrow-up" width="150" class="rotate-90 text-zinc-400" aria-hidden="true" />
 			<!-- Buttons -->
 			<div class="flex items-center justify-center space-x-10">
 				<button
@@ -208,14 +192,11 @@
 					class={isPlaying || userOutput.length == 0
 						? 'text-zinc-700 dark:text-zinc-500'
 						: 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
-					disabled={isPlaying || userOutput.length == 0}
-					><Icon icon="gridicons:play" width="50" /></button
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
-					class={!isPlaying
-						? 'text-zinc-700 dark:text-zinc-500'
-						: 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
+					class={!isPlaying ? 'text-zinc-700 dark:text-zinc-500' : 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
 					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
 				>
 			</div>
@@ -248,11 +229,8 @@
 			<div class="flex items-center justify-center space-x-10">
 				<button
 					onclick={playMorseCode}
-					class={isPlaying || userOutput.length == 0
-						? 'text-zinc-500'
-						: 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
-					disabled={isPlaying || userOutput.length == 0}
-					><Icon icon="gridicons:play" width="50" /></button
+					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}

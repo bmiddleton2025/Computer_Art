@@ -63,22 +63,12 @@
 						<div class="space-y-2">
 							<div class="flex items-center justify-between">
 								<h3>Icon:</h3>
-								<input
-									type="text"
-									bind:value={section.options.icon}
-									class="w-3/4 rounded-lg"
-									placeholder="Icon name"
-								/>
+								<input type="text" bind:value={section.options.icon} class="w-3/4 rounded-lg" placeholder="Icon name" />
 							</div>
 							{#if section.hasTune}
 								<div class="flex items-center justify-between">
 									<h3>Tune:</h3>
-									<input
-										type="text"
-										bind:value={section.options.tune}
-										class="w-1/3 rounded-lg"
-										placeholder="Tune"
-									/>
+									<input type="text" bind:value={section.options.tune} class="w-1/3 rounded-lg" placeholder="Tune" />
 								</div>
 							{/if}
 							<div class="flex items-center justify-between">
@@ -92,12 +82,7 @@
 							</div>
 						</div>
 						<div class="w-1/4">
-							<Icon
-								icon={section.options.icon}
-								style="color: #{section.options.color}"
-								width="fit"
-								class="mx-auto"
-							/>
+							<Icon icon={section.options.icon} style="color: #{section.options.color}" width="fit" class="mx-auto" />
 						</div>
 					</div>
 				</div>
@@ -121,14 +106,7 @@
 				</div>
 				<div class="flex items-center gap-2">
 					<span>1</span>
-					<input
-						type="range"
-						min="1"
-						max="50"
-						step="1"
-						bind:value={numBoxesPerRow}
-						class="flex-1"
-					/>
+					<input type="range" min="1" max="50" step="1" bind:value={numBoxesPerRow} class="flex-1" />
 					<span>50</span>
 				</div>
 			</div>
@@ -149,11 +127,7 @@
 			<h2 class="min-w-fit text-xl font-semibold">Resources:</h2>
 			<div class="space-y-2 text-lg">
 				<p>
-					For more <a
-						href="https://icon-sets.iconify.design/"
-						class="text-blue-800 underline"
-						target="_blank">Icons</a
-					>
+					For more <a href="https://icon-sets.iconify.design/" class="text-blue-800 underline" target="_blank">Icons</a>
 				</p>
 				<p>
 					For more <a

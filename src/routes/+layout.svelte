@@ -13,9 +13,7 @@
 </svelte:head>
 
 <svelte:window bind:innerWidth />
-<div
-	class="flex min-h-screen flex-col bg-linear-to-t from-white to-blue-900 dark:from-black dark:text-white"
->
+<div class="flex min-h-screen flex-col bg-linear-to-t from-white to-blue-900 dark:from-black dark:text-white">
 	<div class="relative">
 		{#if innerWidth >= 840}
 			<ComputerNav />

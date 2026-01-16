@@ -16,20 +16,12 @@
 	<Dropdown simple {activeUrl} class="mx-auto w-full bg-zinc-800 dark:bg-zinc-800" bind:isOpen>
 		<DropdownItem
 			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {!activeUrl.includes(
-				'about'
-			)
-				? activeClass
-				: ''}"
+			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {!activeUrl.includes('about') ? activeClass : ''}"
 			href="{base}/">Home</DropdownItem
 		>
 		<DropdownItem
 			onclick={() => (isOpen = false)}
-			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes(
-				'about'
-			)
-				? activeClass
-				: ''}"
+			class="text-zinc-400 hover:bg-zinc-700 hover:text-white dark:hover:bg-zinc-700 {activeUrl.includes('about') ? activeClass : ''}"
 			href="{base}/about">About</DropdownItem
 		>
 	</Dropdown>
