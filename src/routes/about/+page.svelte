@@ -1,17 +1,18 @@
 <script>
 	import { Carousel, Controls } from 'flowbite-svelte';
+	import { base } from '$app/paths';
 
 	const images = $state([
 		{
-			src: '/images/MorseCodeImage.png',
+			src: `${base}/images/MorseCodeImage.png`,
 			alt: ''
 		},
 		{
-			src: '/images/MorseCodeImage-1.png',
+			src: `${base}/images/MorseCodeImage-1.png`,
 			alt: ''
 		},
 		{
-			src: '/images/MorseCodeImage-2.png',
+			src: `${base}/images/MorseCodeImage-2.png`,
 			alt: ''
 		}
 	]);
