@@ -12,4 +12,5 @@
 	<a href="{base}/" class={!activeUrl.includes('about') ? activeClass : nonActiveClass}>Home</a>
 	<a href="{base}/about" class={activeUrl.includes('about') ? activeClass : nonActiveClass}>About</a
 	>
+	<DarkMode class="my-auto mr-0 ml-auto h-fit hover:bg-zinc-700 dark:hover:bg-zinc-700" />
 </div>

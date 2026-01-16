@@ -47,7 +47,7 @@
 
 	let captureTarget = $state(); // Use HTMLElement for type safety
 	let userInput = $state('');
-	let userOutput = $state('');
+	let userOutput = $state('.-.-.-.-..-');
 	let inputOption = $state('Text');
 	let outputOption = $state('Morse');
 	let numBoxesPerRow = $state(20);
@@ -171,83 +171,100 @@
 			<Icon icon="mdi:gear" width="40" />
 		</button>
 	</div>
-	<div>
-		<div class="flex items-center justify-center space-x-10">
-			<!-- Input Section -->
-			<div class="flex w-1/3 flex-col space-y-2 text-black">
-				<div class="flex justify-center">
-					<select
-						bind:value={inputOption}
-						class="w-1/2 rounded-3xl border-2 border-black bg-gray-300 shadow-lg"
-						aria-label="Input type"
-						onchange={convertInput}
-					>
-						{#each options as option (option)}
-							<option value={option}>{option}</option>
-						{/each}
-					</select>
-				</div>
-				<textarea
-					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg"
-					bind:value={userInput}
-					oninput={convertInput}
-					aria-label="Input text"
-				></textarea>
+	<div class="items-center justify-center space-y-2 lg:flex lg:space-y-0">
+		<!-- Input Section -->
+		<div class="mx-auto flex flex-col space-y-2 text-black lg:w-1/3">
+			<div class="flex justify-center">
+				<select
+					bind:value={inputOption}
+					class="w-1/2 rounded-3xl border-2 border-black shadow-lg"
+					aria-label="Input type"
+					onchange={convertInput}
+				>
+					{#each options as option (option)}
+						<option value={option}>{option}</option>
+					{/each}
+				</select>
 			</div>
+			<textarea
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg"
+				bind:value={userInput}
+				oninput={convertInput}
+				aria-label="Input text"
+			></textarea>
+		</div>
 
-			<div class="mt-10 flex w-fit flex-col items-center">
-				<Icon
-					icon="pajamas:arrow-up"
-					width="150"
-					class="rotate-90 text-gray-400"
-					aria-hidden="true"
-				/>
-				<!-- Buttons -->
-				<div class="flex items-center justify-center space-x-10">
-					<button
-						onclick={playMorseCode}
-						class={isPlaying || userOutput.length == 0
-							? 'text-gray-500'
-							: 'cursor-pointer text-gray-400 hover:text-gray-100'}
-						disabled={isPlaying || userOutput.length == 0}
-						><Icon icon="gridicons:play" width="50" /></button
-					>
-					<button
-						onclick={() => (isPlaying = false)}
-						class={!isPlaying
-							? 'text-gray-500'
-							: 'cursor-pointer text-gray-400 hover:text-gray-100'}
-						disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
-					>
-				</div>
+		<div class="mx-auto flex hidden flex-col items-center lg:mt-10 lg:block lg:w-fit">
+			<Icon
+				icon="pajamas:arrow-up"
+				width="150"
+				class="rotate-90 text-zinc-400"
+				aria-hidden="true"
+			/>
+			<!-- Buttons -->
+			<div class="flex items-center justify-center space-x-10">
+				<button
+					onclick={playMorseCode}
+					class={isPlaying || userOutput.length == 0
+						? 'text-zinc-700 dark:text-zinc-500'
+						: 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
+					disabled={isPlaying || userOutput.length == 0}
+					><Icon icon="gridicons:play" width="50" /></button
+				>
+				<button
+					onclick={() => (isPlaying = false)}
+					class={!isPlaying
+						? 'text-zinc-700 dark:text-zinc-500'
+						: 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
+					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+				>
 			</div>
+		</div>
 
-			<!-- Output Section -->
-			<div class="flex w-1/3 flex-col space-y-2 text-black">
-				<div class="flex justify-center">
-					<select
-						bind:value={outputOption}
-						class="w-1/2 rounded-3xl border-2 border-black bg-gray-300 shadow-lg"
-						aria-label="Input type"
-						onchange={convertInput}
-					>
-						{#each options as option (option)}
-							<option value={option}>{option}</option>
-						{/each}
-					</select>
-				</div>
-				<textarea
-					disabled
-					class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
-					bind:value={userOutput}
-					aria-label="Output text"
-				></textarea>
+		<!-- Output Section -->
+		<div class="mx-auto flex flex-col space-y-2 text-black lg:w-1/3">
+			<div class="flex justify-center">
+				<select
+					bind:value={outputOption}
+					class="w-1/2 rounded-3xl border-2 border-black shadow-lg"
+					aria-label="Input type"
+					onchange={convertInput}
+				>
+					{#each options as option (option)}
+						<option value={option}>{option}</option>
+					{/each}
+				</select>
+			</div>
+			<textarea
+				disabled
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
+				bind:value={userOutput}
+				aria-label="Output text"
+			></textarea>
+		</div>
+
+		<div class="mt-5 flex flex-col items-center lg:hidden lg:w-fit">
+			<!-- Buttons -->
+			<div class="flex items-center justify-center space-x-10">
+				<button
+					onclick={playMorseCode}
+					class={isPlaying || userOutput.length == 0
+						? 'text-zinc-500'
+						: 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
+					disabled={isPlaying || userOutput.length == 0}
+					><Icon icon="gridicons:play" width="50" /></button
+				>
+				<button
+					onclick={() => (isPlaying = false)}
+					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
+					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+				>
 			</div>
 		</div>
 	</div>
 	{#if userOutput.length > 0}
 		<button
-			class="mx-auto flex items-center space-x-2 rounded-lg p-2 text-black {isPlaying ||
+			class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-2 text-center text-black {isPlaying ||
 			userOutput.length == 0
 				? 'bg-green-800'
 				: 'cursor-pointer bg-green-500 hover:bg-green-300 '}"
@@ -256,7 +273,7 @@
 			><Icon icon="lsicon:picture-filled" width="20" />
 			<p>Save Image</p></button
 		>
-		<div class="flex justify-center">
+		<div class="flex justify-center pb-5">
 			<div
 				bind:this={captureTarget}
 				style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr); background-color: #{backgroundColor};"
@@ -266,14 +283,14 @@
 					{#if symbol == '.'}
 						<Icon
 							icon={dotOptions.icon}
-							class={index == playingIndex ? 'scale-125' : ''}
+							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
 							width="fit"
 							style="color: #{dotOptions.color}"
 						/>
 					{:else if symbol == '-'}
 						<Icon
 							icon={dashOptions.icon}
-							class={index == playingIndex ? 'scale-125' : ''}
+							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
 							width="fit"
 							style="color: #{dashOptions.color}"
 						/>

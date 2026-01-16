@@ -21,7 +21,7 @@
 			)
 				? activeClass
 				: ''}"
-			href={base}>Home</DropdownItem
+			href="{base}/">Home</DropdownItem
 		>
 		<DropdownItem
 			onclick={() => (isOpen = false)}

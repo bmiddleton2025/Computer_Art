@@ -45,7 +45,7 @@
 	bind:this={dialog}
 	onclose={() => (openModal = false)}
 	onclick={handleBackdropClick}
-	class="mx-auto my-auto w-2/3 rounded-lg border-2 border-black bg-gray-400 p-2"
+	class="mx-auto my-auto w-4/5 rounded-lg border-2 border-black bg-gray-400 p-2 lg:w-2/3"
 >
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
@@ -61,18 +61,18 @@
 					<h2 class="text-xl font-semibold">{section.title}</h2>
 					<div class="flex items-center justify-around">
 						<div class="space-y-2">
-							<div class="flex justify-between">
-								<h3>Select Icon:</h3>
+							<div class="flex items-center justify-between">
+								<h3>Icon:</h3>
 								<input
 									type="text"
 									bind:value={section.options.icon}
-									class="w-2/3 rounded-lg"
+									class="w-3/4 rounded-lg"
 									placeholder="Icon name"
 								/>
 							</div>
 							{#if section.hasTune}
-								<div class="flex justify-between">
-									<h3>Select Tune:</h3>
+								<div class="flex items-center justify-between">
+									<h3>Tune:</h3>
 									<input
 										type="text"
 										bind:value={section.options.tune}
@@ -82,7 +82,7 @@
 								</div>
 							{/if}
 							<div class="flex items-center justify-between">
-								<h3>Select Color:</h3>
+								<h3>Color:</h3>
 								<input
 									type="color"
 									value={`#${section.options.color}`}
@@ -116,7 +116,7 @@
 			</div>
 			<div class="space-y-2">
 				<div class="flex items-center gap-4">
-					<h2 class="min-w-fit text-xl font-semibold">Pixels Per Row:</h2>
+					<h2 class="min-w-fit text-xl font-semibold">Icons Per Row:</h2>
 					<input type="number" bind:value={numBoxesPerRow} class="w-20 rounded-lg" />
 				</div>
 				<div class="flex items-center gap-2">
@@ -147,20 +147,22 @@
 		<hr />
 		<div>
 			<h2 class="min-w-fit text-xl font-semibold">Resources:</h2>
-			<p>
-				For more <a
-					href="https://icon-sets.iconify.design/"
-					class="text-blue-800 underline"
-					target="_blank">Icons</a
-				>
-			</p>
-			<p>
-				For more <a
-					href="https://github.com/Tonejs/Tone.js/blob/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/Tone/core/type/NoteUnits.ts#L29"
-					target="_blank"
-					class="text-blue-800 underline">Tones</a
-				>
-			</p>
+			<div class="space-y-2 text-lg">
+				<p>
+					For more <a
+						href="https://icon-sets.iconify.design/"
+						class="text-blue-800 underline"
+						target="_blank">Icons</a
+					>
+				</p>
+				<p>
+					For more <a
+						href="https://github.com/Tonejs/Tone.js/blob/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/Tone/core/type/NoteUnits.ts#L29"
+						target="_blank"
+						class="text-blue-800 underline">Tones</a
+					>
+				</p>
+			</div>
 		</div>
 	</div>
 </dialog>
