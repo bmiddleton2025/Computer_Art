@@ -1,6 +1,5 @@
 <script>
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
 	import ComputerNav from '$lib/components/ComputerNav.svelte';
 	import PhoneNav from '$lib/components/PhoneNav.svelte';
 
@@ -9,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" />
 </svelte:head>
 
 <svelte:window bind:innerWidth />
