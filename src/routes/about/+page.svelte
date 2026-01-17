@@ -25,14 +25,18 @@
 		<h1 class="text-6xl font-bold text-shadow-lg">Creators</h1>
 		<div class="items-center justify-around gap-20 space-y-2 lg:flex lg:grid lg:grid-cols-2 lg:space-y-0">
 			<div class="mx-auto w-2/3 text-center lg:w-1/2">
-				<img alt="Bobbi Middleton" src="bobbi-middleton.jpg" class="mx-auto w-1/2 rounded-full border-2 border-black object-contain" />
+				<img
+					alt="Bobbi Middleton"
+					src="{base}/bobbi-middleton.jpg"
+					class="mx-auto w-1/2 rounded-full border-2 border-black object-contain"
+				/>
 				<div class="text-sm lg:text-lg">
 					<h2 class="font-bold">Project Concept:</h2>
 					<h2 class="font-semibold">Bobbi Middleton</h2>
 				</div>
 			</div>
 			<div class="mx-auto w-2/3 text-center lg:w-1/2">
-				<img alt="Dakota Gullicksen" src="dakota2025.jpg" class="mx-auto w-1/2 rounded-full border-2 border-black object-contain" />
+				<img alt="Dakota Gullicksen" src="{base}/dakota2025.jpg" class="mx-auto w-1/2 rounded-full border-2 border-black object-contain" />
 				<div class="text-sm lg:text-lg">
 					<h2 class="font-bold">Software Developer:</h2>
 					<h2 class="font-semibold">Dakota Gullicksen</h2>
