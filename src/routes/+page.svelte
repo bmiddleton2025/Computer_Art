@@ -53,7 +53,7 @@
 	let numBoxesPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
-	let speed = $state(0.2);
+	let speed = $state(0.5);
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
 	let openModal = $state(false);
@@ -112,8 +112,8 @@
 				playingIndex = index;
 				if (value == '.') {
 					synth.triggerAttack(dotOptions.tune);
-					synth.triggerRelease(now + speed / 3);
-					await waitTime(speed / 3);
+					synth.triggerRelease(now + speed / 4);
+					await waitTime(speed / 4);
 				} else if (value == '-') {
 					synth.triggerAttack(dashOptions.tune);
 					synth.triggerRelease(now + speed);
@@ -121,7 +121,7 @@
 				} else if (value == ' ') {
 					await waitTime(speed);
 				}
-				await waitTime(speed / 3); //break between tones
+				await waitTime(speed / 4); //break between tones
 				playingIndex = -1;
 				if (!isPlaying) break;
 			}
@@ -189,14 +189,12 @@
 			<div class="flex items-center justify-center space-x-10">
 				<button
 					onclick={playMorseCode}
-					class={isPlaying || userOutput.length == 0
-						? 'text-zinc-700 dark:text-zinc-500'
-						: 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
+					class={isPlaying || userOutput.length == 0 ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
 					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
-					class={!isPlaying ? 'text-zinc-700 dark:text-zinc-500' : 'cursor-pointer text-zinc-500 hover:text-zinc-300 dark:text-zinc-500'}
+					class={!isPlaying ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
 					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
 				>
 			</div>
