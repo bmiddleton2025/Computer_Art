@@ -176,7 +176,7 @@
 				</select>
 			</div>
 			<textarea
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg/100"
 				bind:value={userInput}
 				oninput={convertInput}
 				aria-label="Input text"
@@ -189,13 +189,13 @@
 			<div class="flex items-center justify-center space-x-10">
 				<button
 					onclick={playMorseCode}
-					class={isPlaying || userOutput.length == 0 ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
-					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
+					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
-					class={!isPlaying ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
-					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-red-700 hover:text-red-300'}
+					disabled={!isPlaying}><Icon icon="icon-park-twotone:handle-square" width="50" /></button
 				>
 			</div>
 		</div>
@@ -216,7 +216,7 @@
 			</div>
 			<textarea
 				disabled
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg/100"
 				bind:value={userOutput}
 				aria-label="Output text"
 			></textarea>

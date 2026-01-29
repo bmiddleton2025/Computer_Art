@@ -45,7 +45,7 @@
 	bind:this={dialog}
 	onclose={() => (openModal = false)}
 	onclick={handleBackdropClick}
-	class="mx-auto my-auto w-4/5 rounded-lg border-2 border-black bg-gray-400 p-2 lg:w-2/3"
+	class="mx-auto my-auto w-4/5 rounded-lg border-2 border-black bg-gray-400 p-2 text-shadow-none lg:w-2/3"
 >
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
@@ -120,22 +120,6 @@
 					<input type="range" min="0" max="1" step="0.01" bind:value={speed} class="flex-1" />
 					<span>1</span>
 				</div>
-			</div>
-		</div>
-		<hr />
-		<div>
-			<h2 class="min-w-fit text-xl font-semibold">Resources:</h2>
-			<div class="space-y-2 text-lg">
-				<p>
-					For more <a href="https://icon-sets.iconify.design/" class="text-blue-800 underline" target="_blank">Icons</a>
-				</p>
-				<p>
-					For more <a
-						href="https://github.com/Tonejs/Tone.js/blob/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/Tone/core/type/NoteUnits.ts#L29"
-						target="_blank"
-						class="text-blue-800 underline">Tones</a
-					>
-				</p>
 			</div>
 		</div>
 	</div>
