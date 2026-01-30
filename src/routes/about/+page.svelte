@@ -20,9 +20,9 @@
 	let index = $state(0);
 </script>
 
-<div class="space-y-10">
+<div class="mb-10 space-y-10">
 	<div class="space-y-8">
-		<h1 class="text-6xl font-bold text-shadow-lg">Creators</h1>
+		<p class="text-5xl font-bold">Creators</p>
 		<div class="items-center justify-around gap-20 space-y-2 lg:flex lg:grid lg:grid-cols-2 lg:space-y-0">
 			<div class="mx-auto w-2/3 text-center lg:w-1/2">
 				<img
@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<div class="space-y-10">
-		<h1 class="text-6xl font-bold text-shadow-lg">Purpose</h1>
+		<p class="text-5xl font-bold">Purpose</p>
 		<p class="text-lg font-semibold italic lg:text-2xl">
 			The purpose of this site is to bridge a gap in STEM around morse code. Morse code is largely an unplugged activity; this site changes
 			text to Morse code then into an image. The morse code then becomes an art piece visually and auditorily. I plan to have students write
@@ -53,8 +53,8 @@
 		</p>
 	</div>
 	<div class="space-y-10">
-		<h1 class="text-6xl font-bold text-shadow-lg">Examples</h1>
-		<div class="mx-auto mb-10 items-center">
+		<p class="text-5xl font-bold">Examples</p>
+		<div class="mx-auto items-center">
 			<Carousel {images} classes={{ slide: 'w-fit h-4/5' }} class="flex justify-center" bind:index duration={10000}>
 				<Controls />
 			</Carousel>

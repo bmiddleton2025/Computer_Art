@@ -50,22 +50,21 @@
 	let userOutput = $state('');
 	let inputOption = $state('Text');
 	let outputOption = $state('Morse');
-	let numBoxesPerRow = $state(20);
+	let numIconsPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
-	let speed = $state(0.5);
+	let speed = $state(0.25);
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
 	let openModal = $state(false);
+	let frequency = $state(600);
 	let dotOptions = $state({
 		color: 'ff0000',
-		icon: 'material-symbols:square-rounded',
-		tune: 'C4'
+		icon: 'material-symbols:square-rounded'
 	});
 	let dashOptions = $state({
 		color: '0000ff',
-		icon: 'material-symbols:square-rounded',
-		tune: 'C4'
+		icon: 'material-symbols:square-rounded'
 	});
 	let spaceOptions = $state({
 		color: '000000',
@@ -104,20 +103,20 @@
 
 	async function playMorseCode() {
 		if (!isPlaying) {
-			await Tone.start();
-			let synth = new Tone.Synth().toDestination();
+			// make and start a 440hz sine tone
+			const osc = new Tone.Oscillator(frequency, 'sine').toDestination();
 			isPlaying = true;
 			for (let [index, value] of morseString.split('').entries()) {
 				const now = Tone.now();
 				playingIndex = index;
 				if (value == '.') {
-					synth.triggerAttack(dotOptions.tune);
-					synth.triggerRelease(now + speed / 4);
-					await waitTime(speed / 4);
+					osc.start();
+					await waitTime(speed / 3);
+					osc.stop();
 				} else if (value == '-') {
-					synth.triggerAttack(dashOptions.tune);
-					synth.triggerRelease(now + speed);
+					osc.start();
 					await waitTime(speed);
+					osc.stop();
 				} else if (value == ' ') {
 					await waitTime(speed);
 				}
@@ -152,7 +151,16 @@
 	}
 </script>
 
-<SettingsModal bind:openModal bind:dotOptions bind:dashOptions bind:spaceOptions bind:speed bind:numBoxesPerRow bind:backgroundColor />
+<SettingsModal
+	bind:openModal
+	bind:dotOptions
+	bind:dashOptions
+	bind:spaceOptions
+	bind:speed
+	bind:numIconsPerRow
+	bind:backgroundColor
+	bind:frequency
+/>
 
 <div class="space-y-5">
 	<div class="flex text-gray-400">
@@ -176,7 +184,7 @@
 				</select>
 			</div>
 			<textarea
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg/100"
 				bind:value={userInput}
 				oninput={convertInput}
 				aria-label="Input text"
@@ -189,13 +197,13 @@
 			<div class="flex items-center justify-center space-x-10">
 				<button
 					onclick={playMorseCode}
-					class={isPlaying || userOutput.length == 0 ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
-					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
+					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
-					class={!isPlaying ? 'text-zinc-700' : 'cursor-pointer text-zinc-500 hover:text-zinc-300'}
-					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-red-700 hover:text-red-300'}
+					disabled={!isPlaying}><Icon icon="icon-park-twotone:handle-square" width="50" /></button
 				>
 			</div>
 		</div>
@@ -216,7 +224,7 @@
 			</div>
 			<textarea
 				disabled
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg/100"
 				bind:value={userOutput}
 				aria-label="Output text"
 			></textarea>
@@ -227,13 +235,13 @@
 			<div class="flex items-center justify-center space-x-10">
 				<button
 					onclick={playMorseCode}
-					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
-					disabled={isPlaying || userOutput.length == 0}><Icon icon="gridicons:play" width="50" /></button
+					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="50" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
-					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-zinc-400 hover:text-zinc-100'}
-					disabled={!isPlaying}><Icon icon="carbon:stop-filled" width="50" /></button
+					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-red-700 hover:text-red-300'}
+					disabled={!isPlaying}><Icon icon="icon-park-twotone:handle-square" width="50" /></button
 				>
 			</div>
 		</div>
@@ -252,7 +260,7 @@
 		<div class="flex justify-center pb-5">
 			<div
 				bind:this={captureTarget}
-				style="display: grid; grid-template-columns: repeat({numBoxesPerRow}, 1fr); background-color: #{backgroundColor};"
+				style="display: grid; grid-template-columns: repeat({numIconsPerRow}, 1fr); background-color: #{backgroundColor};"
 			>
 				<!-- Pixel Area -->
 				{#each userOutput as symbol, index}

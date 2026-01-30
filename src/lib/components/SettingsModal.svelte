@@ -3,17 +3,16 @@
 
 	let {
 		openModal = $bindable(),
-		numBoxesPerRow = $bindable(),
+		numIconsPerRow = $bindable(),
 		speed = $bindable(),
+		frequency = $bindable(),
 		dotOptions = $bindable({
 			color: 'ff0000',
-			icon: 'material-symbols:square-rounded',
-			tune: 'C4'
+			icon: 'material-symbols:square-rounded'
 		}),
 		dashOptions = $bindable({
 			color: '0000ff',
-			icon: 'material-symbols:square-rounded',
-			tune: 'C4'
+			icon: 'material-symbols:square-rounded'
 		}),
 		spaceOptions = $bindable({
 			color: '000000',
@@ -45,7 +44,7 @@
 	bind:this={dialog}
 	onclose={() => (openModal = false)}
 	onclick={handleBackdropClick}
-	class="mx-auto my-auto w-4/5 rounded-lg border-2 border-black bg-gray-400 p-2 lg:w-2/3"
+	class="mx-auto my-auto w-2/3 rounded-lg border-2 border-black bg-gray-400 p-2 text-shadow-none"
 >
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
@@ -55,22 +54,16 @@
 			</button>
 		</div>
 		<hr />
-		<div class="justify-evenly lg:flex">
-			{#each [{ title: 'Dot', options: dotOptions, hasTune: true }, { title: 'Dash', options: dashOptions, hasTune: true }, { title: 'Space', options: spaceOptions, hasTune: false }] as section (section.title)}
+		<div class="justify-evenly font-semibold lg:flex">
+			{#each [{ title: 'Dot', options: dotOptions }, { title: 'Dash', options: dashOptions }, { title: 'Space', options: spaceOptions }] as section (section.title)}
 				<div>
-					<h2 class="text-xl font-semibold">{section.title}</h2>
-					<div class="flex items-center justify-around">
+					<h2 class="text-xl font-bold">{section.title}</h2>
+					<div class="mr-10 ml-10 flex items-center justify-around">
 						<div class="space-y-2">
 							<div class="flex items-center justify-between">
 								<h3>Icon:</h3>
 								<input type="text" bind:value={section.options.icon} class="w-3/4 rounded-lg" placeholder="Icon name" />
 							</div>
-							{#if section.hasTune}
-								<div class="flex items-center justify-between">
-									<h3>Tune:</h3>
-									<input type="text" bind:value={section.options.tune} class="w-1/3 rounded-lg" placeholder="Tune" />
-								</div>
-							{/if}
 							<div class="flex items-center justify-between">
 								<h3>Color:</h3>
 								<input
@@ -81,17 +74,17 @@
 								/>
 							</div>
 						</div>
-						<div class="w-1/4">
-							<Icon icon={section.options.icon} style="color: #{section.options.color}" width="fit" class="mx-auto" />
+						<div class="mr-auto ml-10 hidden w-1/4 md:block">
+							<Icon icon={section.options.icon} style="color: #{section.options.color}" width="fit" />
 						</div>
 					</div>
 				</div>
 			{/each}
 		</div>
 		<hr />
-		<div class="space-y-3">
+		<div class="space-y-3 font-semibold">
 			<div class="flex items-center gap-4">
-				<h2 class="min-w-fit text-xl font-semibold">Background Color:</h2>
+				<h2 class="min-w-fit text-xl font-bold">Background Color:</h2>
 				<input
 					type="color"
 					value={`#${backgroundColor}`}
@@ -101,12 +94,23 @@
 			</div>
 			<div class="space-y-2">
 				<div class="flex items-center gap-4">
-					<h2 class="min-w-fit text-xl font-semibold">Icons Per Row:</h2>
-					<input type="number" bind:value={numBoxesPerRow} class="w-20 rounded-lg" />
+					<h2 class="min-w-fit text-xl font-bold">Frequency:</h2>
+					<input type="number" bind:value={frequency} class="w-20 rounded-lg" />
+				</div>
+				<div class="flex items-center gap-2">
+					<span>100</span>
+					<input type="range" min="100" max="800" step="1" bind:value={frequency} class="flex-1" />
+					<span>800</span>
+				</div>
+			</div>
+			<div class="space-y-2">
+				<div class="flex items-center gap-4">
+					<h2 class="min-w-fit text-xl font-bold">Icons Per Row:</h2>
+					<input type="number" bind:value={numIconsPerRow} class="w-20 rounded-lg" />
 				</div>
 				<div class="flex items-center gap-2">
 					<span>1</span>
-					<input type="range" min="1" max="50" step="1" bind:value={numBoxesPerRow} class="flex-1" />
+					<input type="range" min="1" max="50" step="1" bind:value={numIconsPerRow} class="flex-1" />
 					<span>50</span>
 				</div>
 			</div>
@@ -120,22 +124,6 @@
 					<input type="range" min="0" max="1" step="0.01" bind:value={speed} class="flex-1" />
 					<span>1</span>
 				</div>
-			</div>
-		</div>
-		<hr />
-		<div>
-			<h2 class="min-w-fit text-xl font-semibold">Resources:</h2>
-			<div class="space-y-2 text-lg">
-				<p>
-					For more <a href="https://icon-sets.iconify.design/" class="text-blue-800 underline" target="_blank">Icons</a>
-				</p>
-				<p>
-					For more <a
-						href="https://github.com/Tonejs/Tone.js/blob/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/Tone/core/type/NoteUnits.ts#L29"
-						target="_blank"
-						class="text-blue-800 underline">Tones</a
-					>
-				</p>
 			</div>
 		</div>
 	</div>
