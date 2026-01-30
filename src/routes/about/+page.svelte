@@ -20,7 +20,7 @@
 	let index = $state(0);
 </script>
 
-<div class="space-y-10">
+<div class="mb-10 space-y-10">
 	<div class="space-y-8">
 		<p class="text-5xl font-bold">Creators</p>
 		<div class="items-center justify-around gap-20 space-y-2 lg:flex lg:grid lg:grid-cols-2 lg:space-y-0">
@@ -54,7 +54,7 @@
 	</div>
 	<div class="space-y-10">
 		<p class="text-5xl font-bold">Examples</p>
-		<div class="mx-auto mb-10 items-center">
+		<div class="mx-auto items-center">
 			<Carousel {images} classes={{ slide: 'w-fit h-4/5' }} class="flex justify-center" bind:index duration={10000}>
 				<Controls />
 			</Carousel>
