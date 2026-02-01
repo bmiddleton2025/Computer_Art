@@ -10,7 +10,7 @@
 			<div class="ml-10 w-fit space-y-2">
 				<p>To change the icons for the dots, dashes, and spaces you need to ...</p>
 				<ul class="ml-10 list-decimal space-y-2">
-					<li>Go to <a href="https://icon-sets.iconify.design/" class="underline">Iconify</a>.</li>
+					<li>Go to <a href="https://icon-sets.iconify.design/" class="underline" target="_blank">Iconify</a>.</li>
 					<li>
 						Search what icon you want. (There are a wide range of icons available but there is a chance that what you exactly want may not
 						exist or goes by a different name.)

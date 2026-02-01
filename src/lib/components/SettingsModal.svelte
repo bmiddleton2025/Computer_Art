@@ -49,13 +49,13 @@
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
 			<h1 class="text-2xl font-semibold">Settings</h1>
-			<button onclick={closeModal} aria-label="Close settings">
+			<button onclick={closeModal} aria-label="Close settings" class="cursor-pointer">
 				<Icon icon="material-symbols:close-rounded" width="30" />
 			</button>
 		</div>
 		<hr />
 		<div class="justify-evenly font-semibold lg:flex">
-			{#each [{ title: 'Dot', options: dotOptions }, { title: 'Dash', options: dashOptions }, { title: 'Space', options: spaceOptions }] as section (section.title)}
+			{#each [{ title: 'Dot / 0', options: dotOptions }, { title: 'Dash / 1', options: dashOptions }, { title: 'Space', options: spaceOptions }] as section (section.title)}
 				<div>
 					<h2 class="text-xl font-bold">{section.title}</h2>
 					<div class="mr-10 ml-10 flex items-center justify-around">
@@ -72,6 +72,10 @@
 									onchange={(e) => (section.options.color = handleHexInput(e.target.value))}
 									class="rounded-lg"
 								/>
+							</div>
+							<div class="flex items-center justify-between">
+								<h3>Show:</h3>
+								<input type="checkbox" bind:checked={section.options.show} />
 							</div>
 						</div>
 						<div class="mr-auto ml-10 hidden w-1/4 md:block">

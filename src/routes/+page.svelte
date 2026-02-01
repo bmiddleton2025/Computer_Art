@@ -43,7 +43,7 @@
 		0: '-----',
 		' ': ''
 	});
-	const options = $state(['Text', 'Morse']);
+	const options = $state(['Text', 'Morse', 'Binary']);
 
 	let captureTarget = $state(); // Use HTMLElement for type safety
 	let userInput = $state('');
@@ -53,6 +53,7 @@
 	let numIconsPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
+	let binaryString = $state('');
 	let speed = $state(0.25);
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
@@ -60,27 +61,43 @@
 	let frequency = $state(600);
 	let dotOptions = $state({
 		color: 'ff0000',
-		icon: 'material-symbols:square-rounded'
+		icon: 'material-symbols:square-rounded',
+		show: true
 	});
 	let dashOptions = $state({
 		color: '0000ff',
-		icon: 'material-symbols:square-rounded'
+		icon: 'material-symbols:square-rounded',
+		show: true
 	});
 	let spaceOptions = $state({
 		color: '000000',
-		icon: 'material-symbols:square-rounded'
+		icon: 'material-symbols:square-rounded',
+		show: true
 	});
 	let backgroundColor = $state('000000');
+
+	function textToMorse() {
+		morseString = textString
+			.toUpperCase()
+			.split('')
+			.map((letter) => morseCodeValues[letter] || '')
+			.join(' ');
+	}
+
+	function textToBinary() {
+		const encoder = new TextEncoder('utf-8');
+		let uint8Array = encoder.encode(textString);
+		binaryString = Array.from(uint8Array)
+			.map((byte) => byte.toString(2).padStart(8, '0'))
+			.join(' ');
+	}
 
 	function convertInput() {
 		if (inputOption == 'Text') {
 			userInput = userInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
 			textString = userInput;
-			morseString = userInput
-				.toUpperCase()
-				.split('')
-				.map((letter) => morseCodeValues[letter] || '')
-				.join(' ');
+			textToMorse();
+			textToBinary();
 		} else if (inputOption == 'Morse') {
 			userInput = userInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
 			morseString = userInput;
@@ -88,13 +105,20 @@
 				.split(' ')
 				.map((letter) => Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || '')
 				.join('');
+			textToBinary();
+		} else if (inputOption == 'Binary') {
+			userInput = userInput.replaceAll(/[^0-1 ]+/g, '');
+			binaryString = userInput;
+			const bytes = new Uint8Array(binaryString.split(' ').map((byteStr) => parseInt(byteStr, 2)));
+			const decoder = new TextDecoder('utf-8');
+			console.log(binaryString);
+			textString = decoder.decode(bytes);
+			textToMorse();
 		}
 
-		if (outputOption == 'Text') {
-			userOutput = textString.trimEnd().trimStart();
-		} else if (outputOption == 'Morse') {
-			userOutput = morseString.trimEnd().trimStart();
-		}
+		if (outputOption == 'Text') userOutput = textString.trimEnd().trimStart();
+		else if (outputOption == 'Morse') userOutput = morseString.trimEnd().trimStart();
+		else if (outputOption == 'Binary') userOutput = binaryString.trimEnd().trimStart();
 	}
 
 	function waitTime(seconds) {
@@ -106,14 +130,13 @@
 			// make and start a 440hz sine tone
 			const osc = new Tone.Oscillator(frequency, 'sine').toDestination();
 			isPlaying = true;
-			for (let [index, value] of morseString.split('').entries()) {
-				const now = Tone.now();
+			for (let [index, value] of userOutput.split('').entries()) {
 				playingIndex = index;
-				if (value == '.') {
+				if (value == '.' || value == '0') {
 					osc.start();
 					await waitTime(speed / 3);
 					osc.stop();
-				} else if (value == '-') {
+				} else if (value == '-' || value == '1') {
 					osc.start();
 					await waitTime(speed);
 					osc.stop();
@@ -184,7 +207,7 @@
 				</select>
 			</div>
 			<textarea
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black uppercase shadow-lg/100"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black text-lg uppercase shadow-lg/100"
 				bind:value={userInput}
 				oninput={convertInput}
 				aria-label="Input text"
@@ -224,7 +247,7 @@
 			</div>
 			<textarea
 				disabled
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-black uppercase shadow-lg/100"
+				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-300 text-lg text-black uppercase shadow-lg/100"
 				bind:value={userOutput}
 				aria-label="Output text"
 			></textarea>
@@ -264,21 +287,21 @@
 			>
 				<!-- Pixel Area -->
 				{#each userOutput as symbol, index}
-					{#if symbol == '.'}
+					{#if (symbol == '.' || symbol == '0') && dotOptions.show}
 						<Icon
 							icon={dotOptions.icon}
 							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
 							width="fit"
 							style="color: #{dotOptions.color}"
 						/>
-					{:else if symbol == '-'}
+					{:else if (symbol == '-' || symbol == '1') && dashOptions.show}
 						<Icon
 							icon={dashOptions.icon}
 							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
 							width="fit"
 							style="color: #{dashOptions.color}"
 						/>
-					{:else if symbol == ' '}
+					{:else if symbol == ' ' && spaceOptions.show}
 						<Icon icon={spaceOptions.icon} style="color: #{spaceOptions.color}" width="fit" />
 					{/if}
 				{/each}
