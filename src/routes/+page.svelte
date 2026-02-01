@@ -1,7 +1,7 @@
 <script>
 	import SettingsModal from '$lib/components/SettingsModal.svelte';
 	import Icon from '@iconify/svelte';
-	import html2canvas from 'html2canvas';
+	import html2canvas from 'html2canvas-pro';
 	import * as Tone from 'tone';
 
 	const morseCodeValues = $state({
@@ -288,16 +288,11 @@
 				<!-- Pixel Area -->
 				{#each userOutput as symbol, index}
 					{#if (symbol == '.' || symbol == '0') && dotOptions.show}
-						<Icon
-							icon={dotOptions.icon}
-							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
-							width="fit"
-							style="color: #{dotOptions.color}"
-						/>
+						<Icon icon={dotOptions.icon} class={index == playingIndex ? 'scale-125' : ''} width="fit" style="color: #{dotOptions.color}" />
 					{:else if (symbol == '-' || symbol == '1') && dashOptions.show}
 						<Icon
 							icon={dashOptions.icon}
-							class={index == playingIndex ? 'scale-125 shadow-lg' : ''}
+							class={index == playingIndex ? 'scale-125' : ''}
 							width="fit"
 							style="color: #{dashOptions.color}"
 						/>
