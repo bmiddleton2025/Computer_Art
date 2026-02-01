@@ -1,0 +1,1 @@
+var s,t;const _=(t=(s=globalThis.__sveltekit_1kkx7lf)==null?void 0:s.base)!=null?t:"/Computer_Art";var e,a,l;const k=(l=(a=(e=globalThis.__sveltekit_1kkx7lf)==null?void 0:e.assets)!=null?a:_)!=null?l:"";export{k as a,_ as b};
