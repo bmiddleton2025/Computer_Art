@@ -1,0 +1,1 @@
+import{M as o,O as c}from"./Dn8hM3Bv.js";function i(s,r,t){o(()=>{var n=c(()=>r(s,t==null?void 0:t())||{});if(n!=null&&n.destroy)return()=>n.destroy()})}function a(s){const r=Math.cos(s*Math.PI*.5);return Math.abs(r)<1e-14?1:1-r}export{i as a,a as s};
