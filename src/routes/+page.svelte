@@ -99,13 +99,13 @@
 	}
 
 	function convertInput() {
+		userInput = userInput.trimStart();
 		if (inputOption == 'Text') {
-			userInput = userInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
 			textString = userInput;
 			textToMorse();
 			textToBinary();
 		} else if (inputOption == 'Morse') {
-			userInput = userInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
+			userInput = userInput.replaceAll(/[^\.\- ]+/g, '');
 			morseString = userInput;
 			morseToText();
 			textToBinary();
@@ -114,7 +114,6 @@
 			binaryString = userInput;
 			const bytes = new Uint8Array(binaryString.split(' ').map((byteStr) => parseInt(byteStr, 2)));
 			const decoder = new TextDecoder('utf-8');
-			console.log(binaryString);
 			textString = decoder.decode(bytes);
 			textToMorse();
 		}
@@ -168,17 +167,17 @@
 
 <div class="space-y-5">
 	<div class="flex text-gray-400">
-		<button class="ml-auto cursor-pointer" aria-label="Settings" onclick={() => (openDrawer = true)}>
+		<button class="ml-auto cursor-pointer rounded-lg p-2 hover:bg-zinc-700" aria-label="Settings" onclick={() => (openDrawer = true)}>
 			<Icon icon="mdi:gear" width="40" />
 		</button>
 	</div>
-	<div class="items-center justify-center space-y-2 lg:flex lg:space-y-0">
+	<div class="flex flex-col items-center justify-center space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
 		<!-- Input Section -->
-		<div class="mx-auto flex flex-col space-y-2 text-black lg:w-1/3">
+		<div class="w-full space-y-2 text-black sm:max-w-3xl lg:w-1/3">
 			<div class="flex justify-center">
 				<select
 					bind:value={inputOption}
-					class="w-1/2 rounded-3xl border-2 border-black shadow-lg"
+					class="w-full rounded-3xl border-2 border-black p-2 shadow-lg sm:w-1/2"
 					aria-label="Input type"
 					onchange={convertInput}
 				>
@@ -188,16 +187,16 @@
 				</select>
 			</div>
 			<textarea
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black text-lg {inputOption == 'Morse'
+				class="min-h-[200px] w-full rounded-lg border-2 border-black p-3 text-base {inputOption == 'Morse'
 					? 'font-bold'
-					: 'font-semibold'} uppercase shadow-lg/100"
+					: 'font-semibold'} shadow-lg/100 sm:text-lg"
 				bind:value={userInput}
 				oninput={convertInput}
 				aria-label="Input text"
 			></textarea>
 		</div>
 
-		<div class="mx-auto flex hidden flex-col items-center lg:mt-10 lg:block lg:w-fit">
+		<div class="mx-auto mt-4 flex hidden flex-col items-center lg:mt-10 lg:block lg:w-fit">
 			<Icon icon="pajamas:arrow-up" width="150" class="rotate-90 text-zinc-400" aria-hidden="true" />
 			<!-- Buttons -->
 			<div class="flex items-center justify-center space-x-10">
@@ -215,11 +214,11 @@
 		</div>
 
 		<!-- Output Section -->
-		<div class="mx-auto flex flex-col space-y-2 text-black lg:w-1/3">
+		<div class="w-full space-y-2 text-black sm:max-w-3xl lg:w-1/3">
 			<div class="flex justify-center">
 				<select
 					bind:value={outputOption}
-					class="w-1/2 rounded-3xl border-2 border-black shadow-lg"
+					class="w-full rounded-3xl border-2 border-black p-2 shadow-lg sm:w-1/2"
 					aria-label="Input type"
 					onchange={convertInput}
 				>
@@ -230,26 +229,26 @@
 			</div>
 			<textarea
 				disabled
-				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black bg-gray-400 text-lg {outputOption == 'Morse'
+				class="min-h-[200px] w-full rounded-lg border-2 border-black bg-gray-400 p-3 text-base {outputOption == 'Morse'
 					? 'font-bold'
-					: 'font-semibold'} text-black uppercase shadow-lg/100"
+					: 'font-semibold'} text-black uppercase shadow-lg/100 sm:text-lg"
 				bind:value={userOutput}
 				aria-label="Output text"
 			></textarea>
 		</div>
 
-		<div class="mt-5 flex flex-col items-center lg:hidden lg:w-fit">
+		<div class="mt-5 flex w-full flex-col items-center justify-center space-y-4 lg:hidden lg:w-fit">
 			<!-- Buttons -->
-			<div class="flex items-center justify-center space-x-10">
+			<div class="flex items-center justify-center space-x-6">
 				<button
 					onclick={playMorseCode}
 					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
-					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="50" /></button
+					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="60" /></button
 				>
 				<button
 					onclick={() => (isPlaying = false)}
 					class={!isPlaying ? 'text-zinc-500' : 'cursor-pointer text-red-700 hover:text-red-300'}
-					disabled={!isPlaying}><Icon icon="icon-park-twotone:handle-square" width="50" /></button
+					disabled={!isPlaying}><Icon icon="icon-park-twotone:handle-square" width="60" /></button
 				>
 			</div>
 		</div>

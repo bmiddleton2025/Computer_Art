@@ -20,7 +20,7 @@
 			<PhoneNav />
 		{/if}
 	</div>
-	<div class="flex-1 px-20 pt-10 lg:pt-20">
+	<div class="flex-1 px-4 pt-6 sm:px-6 md:px-20 md:pt-10 lg:pt-20">
 		{@render children()}
 	</div>
 </div>

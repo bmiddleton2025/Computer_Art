@@ -2,12 +2,12 @@
 	import Icon from '@iconify/svelte';
 </script>
 
-<div class="mb-10 space-y-8 text-lg">
-	<p class="text-5xl font-bold">Settings</p>
-	<div class="w-fit space-y-8">
+<div class="mb-10 space-y-6 text-base sm:space-y-8 sm:text-lg">
+	<p class="text-3xl font-bold sm:text-4xl md:text-5xl">Settings</p>
+	<div class="w-full space-y-6 sm:space-y-8">
 		<div class="space-y-2">
-			<p class="text-4xl font-bold">Icon</p>
-			<div class="ml-10 w-fit space-y-2">
+			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Icon</p>
+			<div class="ml-4 w-full space-y-2 sm:ml-6 md:ml-10">
 				<p>To change the icons for the dots, dashes, and spaces you need to ...</p>
 				<ul class="ml-10 list-decimal space-y-2">
 					<li>Go to <a href="https://icon-sets.iconify.design/" class="underline" target="_blank">Iconify</a>.</li>
@@ -26,8 +26,8 @@
 			</div>
 		</div>
 		<div class="space-y-2">
-			<p class="text-4xl font-bold">Frequency</p>
-			<div class="ml-15 w-fit space-y-2 text-lg">
+			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Frequency</p>
+			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
 				<p>
 					The number of occurrences of a repeating event per unit of time. Measured in hertz (Hz), where 1Hz = 1 cycle per second, it
 					defines how often a phenomenon (like sound or radio waves) repeats. For this you can increase or decrease the hertz value, higher
@@ -36,8 +36,8 @@
 			</div>
 		</div>
 		<div class="space-y-2">
-			<p class="text-4xl font-bold">Color</p>
-			<div class="ml-15 w-fit space-y-2 text-lg">
+			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Color</p>
+			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
 				<p>
 					You can set the color of the dots, dashes, space, and background using RGB (red, green, and blue) values. To do this click the
 					small colored box next to what component you want to change and a modal will pop up where you can either type the values or drag
@@ -46,16 +46,16 @@
 			</div>
 		</div>
 		<div class="space-y-2">
-			<p class="text-4xl font-bold">Icons Per Row</p>
-			<div class="ml-15 w-fit space-y-2 text-lg">
+			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Icons Per Row</p>
+			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
 				<p>
 					You can adjust the number of icons that appear in one row but still have unlimited rows. The range only goes between 1 and 50.
 				</p>
 			</div>
 		</div>
 		<div class="space-y-2">
-			<p class="text-4xl font-bold">Speed</p>
-			<div class="ml-15 w-fit space-y-2 text-lg">
+			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Speed</p>
+			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
 				<p>This is adjusts how long it takes for a icon to play in seconds. Higher the speed, the longer the notes play.</p>
 			</div>
 		</div>

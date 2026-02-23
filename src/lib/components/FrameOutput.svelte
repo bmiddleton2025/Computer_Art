@@ -39,14 +39,14 @@
 
 {#if userOutput.length > 0}
 	<button
-		class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-2 text-center text-black {isPlaying ||
+		class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-3 text-center text-black transition-transform hover:scale-105 {isPlaying ||
 		userOutput.length == 0
 			? 'bg-green-800'
 			: 'cursor-pointer bg-green-500 hover:bg-green-300 '}"
 		onclick={takeScreenshot}
 		disabled={isPlaying || userOutput.length == 0}
 		><Icon icon="lsicon:picture-filled" width="20" />
-		<p>Save Image</p></button
+		<p class="text-sm sm:text-base">Save Image</p></button
 	>
 	<div class="flex justify-center pb-5">
 		<div
