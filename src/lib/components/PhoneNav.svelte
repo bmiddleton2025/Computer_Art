@@ -24,14 +24,14 @@
 		<DropdownItem onclick={() => (isOpen = false)} {activeClass} class={activeUrl != '/' ? nonActiveClass : ''} href="{base}/"
 			><p class="text-center">Home</p></DropdownItem
 		>
-		<DropdownItem {activeClass} onclick={() => (isOpen = false)} class={activeUrl != '/about' ? nonActiveClass : ''} href="{base}/about"
-			><p class="text-center">About</p></DropdownItem
-		>
 		<DropdownItem
 			{activeClass}
 			onclick={() => (isOpen = false)}
 			class={activeUrl != '/how-to-use' ? nonActiveClass : ''}
 			href="{base}/how-to-use"><p class="text-center">How To Use</p></DropdownItem
+		>
+		<DropdownItem {activeClass} onclick={() => (isOpen = false)} class={activeUrl != '/about' ? nonActiveClass : ''} href="{base}/about"
+			><p class="text-center">About</p></DropdownItem
 		>
 	</Dropdown>
 </div>

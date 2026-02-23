@@ -1,6 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { Button, Drawer } from 'flowbite-svelte';
+	import { Drawer } from 'flowbite-svelte';
 
 	let {
 		openDrawer = $bindable(),
@@ -27,21 +27,23 @@
 	}
 </script>
 
-<Drawer bind:open={openDrawer} placement="right" class="space-y-3 border-2 border-black bg-gray-400 text-shadow-none">
-	<h1 class="text-2xl font-semibold">Settings</h1>
+<Drawer bind:open={openDrawer} placement="right" class="w-90 space-y-3 border-2 border-black bg-gray-400 text-shadow-none">
+	<h1 class="text-2xl font-bold">Settings</h1>
 	<hr />
 	<div class="space-y-3">
 		{#each [{ title: 'Dot / 0', options: dotOptions }, { title: 'Dash / 1', options: dashOptions }, { title: 'Space', options: spaceOptions }] as section (section.title)}
 			<div>
-				<h2 class="text-lg font-semibold">{section.title}</h2>
+				<h2 class="text-xl font-bold">{section.title}</h2>
 				<div class="flex items-center">
 					<div class="w-3/4 space-y-1">
-						<div class="flex items-center justify-between">
-							<h3>Icon:</h3>
+						<div class="flex items-center gap-3">
+							<a href="https://icon-sets.iconify.design/" target="_blank"
+								><h3 class="text-lg font-semibold text-blue-700 underline hover:text-blue-900">Icon:</h3></a
+							>
 							<input type="text" bind:value={section.options.icon} class="ml-2 w-5/6 rounded-lg p-1" placeholder="Icon name" />
 						</div>
-						<div class="flex items-center justify-between">
-							<h3>Color:</h3>
+						<div class="flex items-center gap-3">
+							<h3 class="text-lg font-semibold">Color:</h3>
 							<input
 								type="color"
 								value={`#${section.options.color}`}
@@ -49,8 +51,8 @@
 								class="rounded-lg"
 							/>
 						</div>
-						<div class="flex items-center justify-between">
-							<h3>Show:</h3>
+						<div class="flex items-center gap-3">
+							<h3 class="text-lg font-semibold">Show:</h3>
 							<input type="checkbox" bind:checked={section.options.show} />
 						</div>
 					</div>
@@ -63,8 +65,8 @@
 	</div>
 	<hr />
 	<div class="space-y-3">
-		<div class="flex items-center gap-4">
-			<h2 class="min-w-fit text-xl font-semibold">Background Color:</h2>
+		<div class="flex items-center gap-3">
+			<h2 class="min-w-fit text-xl font-bold">Background Color:</h2>
 			<input
 				type="color"
 				value={`#${backgroundColor}`}
@@ -74,7 +76,7 @@
 		</div>
 		<div class="space-y-2">
 			<div class="flex items-center gap-4">
-				<h2 class="min-w-fit text-xl font-semibold">Frequency:</h2>
+				<h2 class="min-w-fit text-xl font-bold">Frequency:</h2>
 				<input type="number" bind:value={frequency} class="w-20 rounded-lg" />
 			</div>
 			<div class="flex items-center gap-2">
@@ -85,7 +87,7 @@
 		</div>
 		<div class="space-y-2">
 			<div class="flex items-center gap-4">
-				<h2 class="min-w-fit text-xl font-semibold">Icons Per Row:</h2>
+				<h2 class="min-w-fit text-xl font-bold">Icons Per Row:</h2>
 				<input type="number" bind:value={numIconsPerRow} class="w-20 rounded-lg" />
 			</div>
 			<div class="flex items-center gap-2">
@@ -96,7 +98,7 @@
 		</div>
 		<div class="space-y-2">
 			<div class="flex items-center gap-4">
-				<h2 class="min-w-fit text-xl font-semibold">Speed:</h2>
+				<h2 class="min-w-fit text-xl font-bold">Speed:</h2>
 				<input type="number" bind:value={speed} class="w-20 rounded-lg" />
 			</div>
 			<div class="flex items-center gap-2">

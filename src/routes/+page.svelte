@@ -99,13 +99,13 @@
 	}
 
 	function convertInput() {
+		userInput = userInput.trimStart();
 		if (inputOption == 'Text') {
-			userInput = userInput.toUpperCase().replaceAll(/[^A-Z 0-9]+/g, '');
 			textString = userInput;
 			textToMorse();
 			textToBinary();
 		} else if (inputOption == 'Morse') {
-			userInput = userInput.toUpperCase().replaceAll(/[^\.\- ]+/g, '');
+			userInput = userInput.replaceAll(/[^\.\- ]+/g, '');
 			morseString = userInput;
 			morseToText();
 			textToBinary();
@@ -114,7 +114,6 @@
 			binaryString = userInput;
 			const bytes = new Uint8Array(binaryString.split(' ').map((byteStr) => parseInt(byteStr, 2)));
 			const decoder = new TextDecoder('utf-8');
-			console.log(binaryString);
 			textString = decoder.decode(bytes);
 			textToMorse();
 		}
@@ -190,7 +189,7 @@
 			<textarea
 				class="min-h-[200px] w-full max-w-3xl rounded-lg border-2 border-black text-lg {inputOption == 'Morse'
 					? 'font-bold'
-					: 'font-semibold'} uppercase shadow-lg/100"
+					: 'font-semibold'} shadow-lg/100"
 				bind:value={userInput}
 				oninput={convertInput}
 				aria-label="Input text"
