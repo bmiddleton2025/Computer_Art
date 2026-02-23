@@ -30,10 +30,11 @@
 		const link = document.createElement('a');
 		link.download = 'MorseCodeImage.png';
 		link.href = image;
-		link.click(); // Programmatically click the link to trigger download
 
-		// Clean up the temporary link element
-		link.remove();
+		// Append to body before clicking - required for Safari compatibility
+		document.body.appendChild(link);
+		link.dispatchEvent(new MouseEvent('click')); // Use dispatchEvent instead of click() for better Safari support
+		document.body.removeChild(link); // Remove the temporary link element
 	}
 </script>
 
