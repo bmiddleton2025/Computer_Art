@@ -12,7 +12,9 @@
 </script>
 
 <div class="z-10 flex bg-zinc-800 p-3 text-zinc-400">
-	<button class="w-full rounded-lg"><Icon class="mx-auto text-xl" icon="mdi:hamburger-menu" /></button>
+	<button class="w-full rounded-lg p-2 hover:bg-zinc-700" aria-label="Menu"
+		><Icon class="mx-auto text-2xl" icon="mdi:hamburger-menu" /></button
+	>
 	<Dropdown
 		simple
 		{activeUrl}
@@ -22,16 +24,16 @@
 		transitionParams={{ duration: 300, axis: 'y' }}
 	>
 		<DropdownItem onclick={() => (isOpen = false)} {activeClass} class={activeUrl != '/' ? nonActiveClass : ''} href="{base}/"
-			><p class="text-center">Home</p></DropdownItem
+			><p class="text-center text-lg">Home</p></DropdownItem
 		>
 		<DropdownItem
 			{activeClass}
 			onclick={() => (isOpen = false)}
 			class={activeUrl != '/how-to-use' ? nonActiveClass : ''}
-			href="{base}/how-to-use"><p class="text-center">How To Use</p></DropdownItem
+			href="{base}/how-to-use"><p class="text-center text-lg">How To Use</p></DropdownItem
 		>
 		<DropdownItem {activeClass} onclick={() => (isOpen = false)} class={activeUrl != '/about' ? nonActiveClass : ''} href="{base}/about"
-			><p class="text-center">About</p></DropdownItem
+			><p class="text-center text-lg">About</p></DropdownItem
 		>
 	</Dropdown>
 </div>
