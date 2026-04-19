@@ -23,7 +23,7 @@
 <div class="mb-10 space-y-10">
 	<div class="space-y-8">
 		<p class="text-3xl font-bold sm:text-4xl md:text-5xl">Creators</p>
-		<div class="flex flex-col items-center justify-around gap-6 space-y-6 sm:gap-8 md:space-y-0 lg:grid lg:grid-cols-2 lg:flex-row">
+		<div class="flex flex-col items-center gap-6 space-y-6 sm:gap-8 md:space-y-0 lg:flex-row">
 			<div class="w-full text-center sm:w-2/3 lg:w-1/2">
 				<img
 					alt="Bobbi Middleton"

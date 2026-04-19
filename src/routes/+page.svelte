@@ -3,6 +3,8 @@
 	import * as Tone from 'tone';
 	import FrameOutput from '$lib/components/FrameOutput.svelte';
 	import SettingsDrawer from '$lib/components/SettingsDrawer.svelte';
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	const morseCodeValues = $state({
 		A: '.-',
@@ -47,8 +49,6 @@
 
 	let userInput = $state('');
 	let userOutput = $state('');
-	let inputOption = $state('Text');
-	let outputOption = $state('Morse');
 	let numIconsPerRow = $state(20);
 	let textString = $state('');
 	let morseString = $state('');
@@ -58,6 +58,8 @@
 	let playingIndex = $state(-1);
 	let openDrawer = $state(false);
 	let frequency = $state(600);
+	let inputOption = $derived('Text');
+	let outputOption = $state('Morse');
 	let dotOptions = $state({
 		color: 'ff0000',
 		icon: 'material-symbols:square-rounded',
@@ -74,6 +76,15 @@
 		show: true
 	});
 	let backgroundColor = $state('000000');
+
+	onMount(() => {
+		if (browser) {
+			userInput = sessionStorage.getItem('userInput') ?? '';
+			inputOption = sessionStorage.getItem('inputOption') ?? 'Text';
+			outputOption = sessionStorage.getItem('outputOption') ?? 'Morse';
+			convertInput();
+		}
+	});
 
 	function textToMorse() {
 		morseString = textString
@@ -99,6 +110,10 @@
 	}
 
 	function convertInput() {
+		if (browser) {
+			sessionStorage.setItem('inputOption', inputOption);
+			sessionStorage.setItem('outputOption', outputOption);
+		}
 		userInput = userInput.trimStart();
 		if (inputOption == 'Text') {
 			textString = userInput;
@@ -121,6 +136,8 @@
 		if (outputOption == 'Text') userOutput = textString.trimEnd().trimStart();
 		else if (outputOption == 'Morse') userOutput = morseString.trimEnd().trimStart();
 		else if (outputOption == 'Binary') userOutput = binaryString.trimEnd().trimStart();
+
+		if (browser) sessionStorage.setItem('userInput', userInput);
 	}
 
 	function waitTime(seconds) {
@@ -129,27 +146,37 @@
 
 	async function playMorseCode() {
 		if (!isPlaying) {
-			// make and start a 440hz sine tone
-			const osc = new Tone.Oscillator(frequency, 'sine').toDestination();
 			isPlaying = true;
+
+			// 1. Use a Gain node to control volume (the "Gate")
+			const gainNode = new Tone.Gain(0).toDestination();
+			const osc = new Tone.Oscillator(frequency, 'sine').connect(gainNode).start();
+
 			for (let [index, value] of userOutput.split('').entries()) {
 				playingIndex = index;
-				if (value == '.' || value == '0') {
-					osc.start();
-					await waitTime(speed / 3);
-					osc.stop();
-				} else if (value == '-' || value == '1') {
-					osc.start();
-					await waitTime(speed);
-					osc.stop();
-				} else if (value == ' ') {
-					await waitTime(speed);
-				}
-				await waitTime(speed / 4); //break between tones
-				playingIndex = -1;
+
+				let duration = 0;
+				if (value === '.' || value === '0') duration = speed / 3;
+				else if (value === '-' || value === '1') duration = speed;
+
+				if (duration > 0) {
+					// 2. Ramp up quickly (5ms) to avoid the start pop
+					gainNode.gain.rampTo(1, 0.005);
+					await waitTime(duration);
+					// 3. Ramp down quickly (5ms) to avoid the end pop
+					gainNode.gain.rampTo(0, 0.005);
+				} else if (value === ' ') await waitTime(speed);
+
+				await waitTime(speed / 4); // break between tones
+
 				if (!isPlaying) break;
 			}
+
+			// Clean up
+			osc.stop().dispose();
+			gainNode.dispose();
 			isPlaying = false;
+			playingIndex = -1;
 		}
 	}
 </script>
@@ -166,8 +193,16 @@
 />
 
 <div class="space-y-5">
-	<div class="flex text-gray-400">
-		<button class="ml-auto cursor-pointer rounded-lg p-2 hover:bg-zinc-700" aria-label="Settings" onclick={() => (openDrawer = true)}>
+	<div class="flex items-center justify-end gap-10">
+		<button
+			class="h-fit cursor-pointer items-center rounded-lg bg-green-500 p-2 text-center text-black transition-transform hover:scale-105 hover:bg-green-300"
+			>Reset Input</button
+		>
+		<button
+			class="cursor-pointer rounded-lg p-2 text-gray-400 transition-transform hover:scale-105 hover:text-zinc-500"
+			aria-label="Settings"
+			onclick={() => (openDrawer = true)}
+		>
 			<Icon icon="mdi:gear" width="40" />
 		</button>
 	</div>
@@ -219,7 +254,7 @@
 				<select
 					bind:value={outputOption}
 					class="w-full rounded-3xl border-2 border-black p-2 shadow-lg sm:w-1/2"
-					aria-label="Input type"
+					aria-label="Output type"
 					onchange={convertInput}
 				>
 					{#each options as option (option)}
@@ -238,7 +273,7 @@
 		</div>
 
 		<div class="mt-5 flex w-full flex-col items-center justify-center space-y-4 lg:hidden lg:w-fit">
-			<!-- Buttons -->
+			<!-- Buttons for small screen-->
 			<div class="flex items-center justify-center space-x-6">
 				<button
 					onclick={playMorseCode}

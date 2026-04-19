@@ -43,13 +43,6 @@
 		-webkit-touch-callout: none;
 	}
 
-	/* Better touch targets for iOS */
-	button,
-	input,
-	textarea {
-		min-height: 44px;
-	}
-
 	input[type='checkbox'],
 	input[type='radio'] {
 		min-height: auto;

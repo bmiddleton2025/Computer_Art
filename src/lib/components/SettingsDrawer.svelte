@@ -27,7 +27,11 @@
 	}
 </script>
 
-<Drawer bind:open={openDrawer} placement="right" class="w-80 space-y-3 border-2 border-black bg-gray-400 text-shadow-none sm:w-90">
+<Drawer
+	bind:open={openDrawer}
+	placement="right"
+	class="w-80 space-y-3 border-2 border-black bg-gray-400 transition duration-300 text-shadow-none sm:w-90"
+>
 	<h1 class="text-2xl font-bold">Settings</h1>
 	<hr />
 	<div class="space-y-3">

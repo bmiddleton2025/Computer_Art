@@ -22,6 +22,7 @@
 
 		// Use html2canvas with options to handle potential issues like CORS for images
 		const canvas = await html2canvas(captureTarget, {
+			// CORS (Cross-Origin Resource Sharing) is a browser-level security feature that allows a web server to explicitly permit resources (like APIs or images) to be requested from a domain different from the one that served the original web page
 			useCORS: true, // Attempt to load images using CORS
 			allowTaint: true // Allow cross-origin images to "taint" the canvas
 		});
@@ -43,7 +44,7 @@
 		class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-3 text-center text-black transition-transform hover:scale-105 {isPlaying ||
 		userOutput.length == 0
 			? 'bg-green-800'
-			: 'cursor-pointer bg-green-500 hover:bg-green-300 '}"
+			: 'cursor-pointer bg-green-500 hover:bg-green-300'}"
 		onclick={takeScreenshot}
 		disabled={isPlaying || userOutput.length == 0}
 		><Icon icon="lsicon:picture-filled" width="20" />
