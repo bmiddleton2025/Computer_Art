@@ -107,7 +107,7 @@
 			</div>
 		</div>
 		<div class="space-y-2">
-			<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+			<div class="flex gap-2 sm:flex-row sm:items-center sm:gap-4">
 				<h2 class="min-w-fit text-base font-bold sm:text-xl">Speed:</h2>
 				<input type="number" bind:value={speed} class="mr-0 ml-auto w-full rounded-lg p-2 sm:w-20 sm:p-1" />
 			</div>
