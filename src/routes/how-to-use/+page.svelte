@@ -11,10 +11,7 @@
 				<p>To change the icons for the dots, dashes, and spaces you need to ...</p>
 				<ul class="ml-10 list-decimal space-y-2">
 					<li>Go to <a href="https://icon-sets.iconify.design/" class="underline" target="_blank">Iconify</a>.</li>
-					<li>
-						Search what icon you want. (There are a wide range of icons available but there is a chance that what you exactly want may not
-						exist or goes by a different name.)
-					</li>
+					<li>Search the icon you want.</li>
 					<li>Select the icon of your choosing.</li>
 					<li>Scroll down to where all the information is.</li>
 					<li>
@@ -27,36 +24,43 @@
 		</div>
 		<div class="space-y-2">
 			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Frequency</p>
-			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
-				<p>
-					The number of occurrences of a repeating event per unit of time. Measured in hertz (Hz), where 1Hz = 1 cycle per second, it
-					defines how often a phenomenon (like sound or radio waves) repeats. For this you can increase or decrease the hertz value, higher
-					the hertz higher the pitch.
-				</p>
+			<div class="ml-4 w-full space-y-2 sm:ml-6 md:ml-10">
+				<ul class="ml-10 list-disc space-y-2">
+					<li>Measured in hertz (Hz) - 1Hz = 1 cycle per second</li>
+					<li>Defines how often a phenomenon (like sound or radio waves) repeats</li>
+					<li>Increase or decrease the hertz value to adjust</li>
+					<li>Higher hertz = higher pitch</li>
+				</ul>
 			</div>
 		</div>
 		<div class="space-y-2">
 			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Color</p>
-			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
-				<p>
-					You can set the color of the dots, dashes, space, and background using RGB (red, green, and blue) values. To do this click the
-					small colored box next to what component you want to change and a modal will pop up where you can either type the values or drag
-					the sliders to a color that you want.
-				</p>
+			<div class="ml-4 w-full space-y-2 sm:ml-6 md:ml-10">
+				<ul class="ml-10 list-disc space-y-2">
+					<li>Set color for dots, dashes, spaces, and background</li>
+					<li>Uses RGB (red, green, blue) values</li>
+					<li>Click the colored box next to the component you want to change</li>
+					<li>Type RGB values or drag sliders to select your color</li>
+				</ul>
 			</div>
 		</div>
 		<div class="space-y-2">
 			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Icons Per Row</p>
-			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
-				<p>
-					You can adjust the number of icons that appear in one row but still have unlimited rows. The range only goes between 1 and 50.
-				</p>
+			<div class="ml-4 w-full space-y-2 sm:ml-6 md:ml-10">
+				<ul class="ml-10 list-disc space-y-2">
+					<li>Adjust the number of icons per row</li>
+					<li>Unlimited rows available</li>
+					<li>Range: 1 to 50 icons per row</li>
+				</ul>
 			</div>
 		</div>
 		<div class="space-y-2">
 			<p class="text-2xl font-bold sm:text-3xl md:text-4xl">Speed</p>
-			<div class="ml-4 w-full space-y-2 text-base sm:ml-6 sm:text-lg md:ml-15">
-				<p>This is adjusts how long it takes for a icon to play in seconds. Higher the speed, the longer the notes play.</p>
+			<div class="ml-4 w-full space-y-2 sm:ml-6 md:ml-10">
+				<ul class="ml-10 list-disc space-y-2">
+					<li>Adjusts how long it takes for an icon to play (in seconds)</li>
+					<li>Higher speed = longer notes play</li>
+				</ul>
 			</div>
 		</div>
 	</div>
