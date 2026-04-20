@@ -1,65 +1,35 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import * as Tone from 'tone';
 	import FrameOutput from '$lib/components/FrameOutput.svelte';
 	import SettingsDrawer from '$lib/components/SettingsDrawer.svelte';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { processInput, getOutput } from '$lib/utils/morse-conversion.js';
+	import { playMorseCode } from '$lib/utils/audio-player.js';
 
-	const morseCodeValues = $state({
-		A: '.-',
-		B: '-...',
-		C: '-.-.',
-		D: '-..',
-		E: '.',
-		F: '..-.',
-		G: '--.',
-		H: '....',
-		I: '..',
-		J: '.---',
-		K: '-.-',
-		L: '.-..',
-		M: '--',
-		N: '-.',
-		O: '---',
-		P: '.--.',
-		Q: '--.-',
-		R: '.-.',
-		S: '...',
-		T: '-',
-		U: '..-',
-		V: '...-',
-		W: '.--',
-		X: '-..-',
-		Y: '-.--',
-		Z: '--..',
-		1: '.----',
-		2: '..---',
-		3: '...--',
-		4: '....-',
-		5: '.....',
-		6: '-....',
-		7: '--...',
-		8: '---..',
-		9: '----.',
-		0: '-----',
-		' ': ''
-	});
+	// Conversion format options
 	const options = $state(['Text', 'Morse', 'Binary']);
 
+	// User input/output state
 	let userInput = $state('');
 	let userOutput = $state('');
-	let numIconsPerRow = $state(20);
+	let inputOption = $state('Text');
+	let outputOption = $state('Morse');
+
+	// Internal string representations for each format
 	let textString = $state('');
 	let morseString = $state('');
 	let binaryString = $state('');
-	let speed = $state(0.25);
+
+	// Audio playback state
 	let isPlaying = $state(false);
 	let playingIndex = $state(-1);
-	let openDrawer = $state(false);
 	let frequency = $state(600);
-	let inputOption = $derived('Text');
-	let outputOption = $state('Morse');
+	let speed = $state(0.25);
+
+	// Visualization settings
+	let numIconsPerRow = $state(20);
+	let backgroundColor = $state('000000');
 	let dotOptions = $state({
 		color: 'ff0000',
 		icon: 'material-symbols:square-rounded',
@@ -75,7 +45,9 @@
 		icon: 'material-symbols:square-rounded',
 		show: true
 	});
-	let backgroundColor = $state('000000');
+
+	// UI state
+	let openDrawer = $state(false);
 
 	onMount(() => {
 		if (browser) {
@@ -86,98 +58,48 @@
 		}
 	});
 
-	function textToMorse() {
-		morseString = textString
-			.toUpperCase()
-			.split('')
-			.map((letter) => morseCodeValues[letter] || '')
-			.join(' ');
-	}
-
-	function textToBinary() {
-		const encoder = new TextEncoder('utf-8');
-		let uint8Array = encoder.encode(textString);
-		binaryString = Array.from(uint8Array)
-			.map((byte) => byte.toString(2).padStart(8, '0'))
-			.join(' ');
-	}
-
-	function morseToText() {
-		textString = morseString
-			.split(' ')
-			.map((letter) => Object.keys(morseCodeValues).find((key) => morseCodeValues[key] === letter) || '')
-			.join('');
-	}
-
+	/**
+	 * Converts user input to internal representations and updates output
+	 * Processes the input based on selected format, persists to sessionStorage
+	 */
 	function convertInput() {
 		if (browser) {
 			sessionStorage.setItem('inputOption', inputOption);
 			sessionStorage.setItem('outputOption', outputOption);
 		}
-		userInput = userInput.trimStart();
-		if (inputOption == 'Text') {
-			textString = userInput;
-			textToMorse();
-			textToBinary();
-		} else if (inputOption == 'Morse') {
-			userInput = userInput.replaceAll(/[^\.\- ]+/g, '');
-			morseString = userInput;
-			morseToText();
-			textToBinary();
-		} else if (inputOption == 'Binary') {
-			userInput = userInput.replaceAll(/[^0-1 ]+/g, '');
-			binaryString = userInput;
-			const bytes = new Uint8Array(binaryString.split(' ').map((byteStr) => parseInt(byteStr, 2)));
-			const decoder = new TextDecoder('utf-8');
-			textString = decoder.decode(bytes);
-			textToMorse();
-		}
 
-		if (outputOption == 'Text') userOutput = textString.trimEnd().trimStart();
-		else if (outputOption == 'Morse') userOutput = morseString.trimEnd().trimStart();
-		else if (outputOption == 'Binary') userOutput = binaryString.trimEnd().trimStart();
+		const result = processInput(userInput, inputOption);
+		textString = result.textString;
+		morseString = result.morseString;
+		binaryString = result.binaryString;
+		userInput = result.cleanedInput;
+
+		userOutput = getOutput(outputOption, textString, morseString, binaryString);
 
 		if (browser) sessionStorage.setItem('userInput', userInput);
 	}
 
-	function waitTime(seconds) {
-		return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+	/**
+	 * Plays the current morse/binary output with audio and visual feedback
+	 * Uses tone synthesis to generate appropriate frequencies for dots and dashes
+	 */
+	async function handlePlayMorseCode() {
+		await playMorseCode(userOutput, frequency, speed, {
+			setPlayingIndex: (index) => (playingIndex = index),
+			setIsPlaying: (playing) => (isPlaying = playing),
+			shouldStop: () => !isPlaying
+		});
 	}
 
-	async function playMorseCode() {
-		if (!isPlaying) {
-			isPlaying = true;
-
-			// 1. Use a Gain node to control volume (the "Gate")
-			const gainNode = new Tone.Gain(0).toDestination();
-			const osc = new Tone.Oscillator(frequency, 'sine').connect(gainNode).start();
-
-			for (let [index, value] of userOutput.split('').entries()) {
-				playingIndex = index;
-
-				let duration = 0;
-				if (value === '.' || value === '0') duration = speed / 3;
-				else if (value === '-' || value === '1') duration = speed;
-
-				if (duration > 0) {
-					// 2. Ramp up quickly (5ms) to avoid the start pop
-					gainNode.gain.rampTo(1, 0.005);
-					await waitTime(duration);
-					// 3. Ramp down quickly (5ms) to avoid the end pop
-					gainNode.gain.rampTo(0, 0.005);
-				} else if (value === ' ') await waitTime(speed);
-
-				await waitTime(speed / 4); // break between tones
-
-				if (!isPlaying) break;
-			}
-
-			// Clean up
-			osc.stop().dispose();
-			gainNode.dispose();
-			isPlaying = false;
-			playingIndex = -1;
-		}
+	/**
+	 * Resets all user inputs and settings to their default values
+	 */
+	function resetValues() {
+		userInput = '';
+		userOutput = '';
+		inputOption = 'Text';
+		outputOption = 'Morse';
+		sessionStorage.clear();
 	}
 </script>
 
@@ -193,10 +115,15 @@
 />
 
 <div class="space-y-5">
-	<div class="flex items-center justify-end gap-10">
+	<div class="flex items-center justify-between gap-10 lg:justify-end">
 		<button
-			class="h-fit cursor-pointer items-center rounded-lg bg-green-500 p-2 text-center text-black transition-transform hover:scale-105 hover:bg-green-300"
-			>Reset Input</button
+			class="h-fit items-center rounded-lg p-2 text-center text-black transition-transform {userInput.length == 0 &&
+			inputOption == 'Text' &&
+			outputOption == 'Morse'
+				? 'bg-green-800'
+				: 'cursor-pointer bg-green-500 hover:scale-105 hover:bg-green-300'}"
+			disabled={userInput.length == 0 && inputOption == 'Text' && outputOption == 'Morse'}
+			onclick={resetValues}>Reset Input</button
 		>
 		<button
 			class="cursor-pointer rounded-lg p-2 text-gray-400 transition-transform hover:scale-105 hover:text-zinc-500"
@@ -236,7 +163,7 @@
 			<!-- Buttons -->
 			<div class="flex items-center justify-center space-x-10">
 				<button
-					onclick={playMorseCode}
+					onclick={handlePlayMorseCode}
 					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
 					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="50" /></button
 				>
@@ -272,11 +199,11 @@
 			></textarea>
 		</div>
 
-		<div class="mt-5 flex w-full flex-col items-center justify-center space-y-4 lg:hidden lg:w-fit">
+		<div class="mb-4 flex w-full flex-col items-center justify-center space-y-4 lg:hidden lg:w-fit">
 			<!-- Buttons for small screen-->
 			<div class="flex items-center justify-center space-x-6">
 				<button
-					onclick={playMorseCode}
+					onclick={handlePlayMorseCode}
 					class={isPlaying || userOutput.length == 0 ? 'text-zinc-500' : 'cursor-pointer text-green-700 hover:text-green-300'}
 					disabled={isPlaying || userOutput.length == 0}><Icon icon="icon-park-twotone:play" width="60" /></button
 				>

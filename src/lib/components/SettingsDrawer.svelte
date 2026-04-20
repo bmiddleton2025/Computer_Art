@@ -22,6 +22,12 @@
 		backgroundColor = $bindable('000000')
 	} = $props();
 
+	/**
+	 * Extracts the hex color code from an HTML color input value
+	 * Removes the leading '#' character from the color picker's output
+	 * @param {string} value - The color value from the input element (e.g., '#ff0000')
+	 * @returns {string} The hex color code without the '#' (e.g., 'ff0000')
+	 */
 	function handleHexInput(value) {
 		return value.slice(1);
 	}
@@ -69,7 +75,7 @@
 	</div>
 	<hr />
 	<div class="space-y-3">
-		<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+		<div class="flex gap-2 sm:flex-row sm:items-center sm:gap-3">
 			<h2 class="min-w-fit text-base font-bold sm:text-xl">Background Color:</h2>
 			<input
 				type="color"
@@ -79,9 +85,9 @@
 			/>
 		</div>
 		<div class="space-y-2">
-			<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+			<div class="flex gap-2 sm:flex-row sm:items-center sm:gap-4">
 				<h2 class="min-w-fit text-base font-bold sm:text-xl">Frequency:</h2>
-				<input type="number" bind:value={frequency} class="w-full rounded-lg p-2 sm:w-20 sm:p-1" />
+				<input type="number" bind:value={frequency} class="mr-0 ml-auto w-full rounded-lg p-2 sm:w-20 sm:p-1" />
 			</div>
 			<div class="flex items-center gap-2 text-sm">
 				<span>100</span>
@@ -90,9 +96,9 @@
 			</div>
 		</div>
 		<div class="space-y-2">
-			<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+			<div class="flex gap-2 sm:flex-row sm:items-center sm:gap-4">
 				<h2 class="min-w-fit text-base font-bold sm:text-xl">Icons Per Row:</h2>
-				<input type="number" bind:value={numIconsPerRow} class="w-full rounded-lg p-2 sm:w-20 sm:p-1" />
+				<input type="number" bind:value={numIconsPerRow} class="mr-0 ml-auto w-full rounded-lg p-2 sm:w-20 sm:p-1" />
 			</div>
 			<div class="flex items-center gap-2 text-sm">
 				<span>1</span>
@@ -103,7 +109,7 @@
 		<div class="space-y-2">
 			<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
 				<h2 class="min-w-fit text-base font-bold sm:text-xl">Speed:</h2>
-				<input type="number" bind:value={speed} class="w-full rounded-lg p-2 sm:w-20 sm:p-1" />
+				<input type="number" bind:value={speed} class="mr-0 ml-auto w-full rounded-lg p-2 sm:w-20 sm:p-1" />
 			</div>
 			<div class="flex items-center gap-2 text-sm">
 				<span>0</span>

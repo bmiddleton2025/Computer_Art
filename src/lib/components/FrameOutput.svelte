@@ -14,6 +14,12 @@
 	} = $props();
 	let captureTarget = $state(); // Use HTMLElement for type safety
 
+	/**
+	 * Captures the morse code visualization grid as a PNG image
+	 * Uses html2canvas to convert the DOM element to a canvas, then downloads it as "MorseCodeImage.png"
+	 * Configures CORS and taint options to handle cross-origin images
+	 * Temporarily appends and removes a download link for Safari compatibility
+	 */
 	async function takeScreenshot() {
 		if (!captureTarget) {
 			console.error('Target element not found!');
@@ -41,10 +47,10 @@
 
 {#if userOutput.length > 0}
 	<button
-		class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-3 text-center text-black transition-transform hover:scale-105 {isPlaying ||
+		class="mx-auto flex w-fit items-center justify-center space-x-2 rounded-lg p-3 text-center text-black transition-transform {isPlaying ||
 		userOutput.length == 0
 			? 'bg-green-800'
-			: 'cursor-pointer bg-green-500 hover:bg-green-300'}"
+			: 'cursor-pointer bg-green-500 hover:scale-105 hover:bg-green-300'}"
 		onclick={takeScreenshot}
 		disabled={isPlaying || userOutput.length == 0}
 		><Icon icon="lsicon:picture-filled" width="20" />
